@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minty — Web Developer & Architect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+   <script src="https://kit.fontawesome.com/YOUR_KIT_ID.js" crossorigin="anonymous"></script>
+
+  <script src="https://kit.fontawesome.com/a123b456cd.js" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-oI6X0Qx9...etc..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-TfM6G7Z2E/5mZMEuZEtqM7yS0N1vF4f7HhvcpYjzXw5KzAWm7SYOjv2IMd6mItW5PMcFMHcdMCeM6xQY0Y1DAw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    html { scroll-behavior: smooth; }
+    .hero-enter { opacity: 0; transform: translateY(18px); }
+    .hero-enter.show { opacity: 1; transform: translateY(0); transition: transform .6s cubic-bezier(.2,.8,.2,1), opacity .6s ease; }
+
+    .fade-up-in {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .fade-up-in.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up-in.hide {
+      opacity: 0;
+      transform: translateY(-60px);
+    }
+  </style>
+</head>
+<body class="bg-[#0f3d2e] text-gray-100 font-sans">
+  <!-- Navbar -->
+  <header class="fixed w-full bg-[#0f3d2e]/90 backdrop-blur-md z-50 py-3">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-4">
+      <h1 class="text-2xl font-bold tracking-wide">Minty</h1>
+      <nav class="hidden md:flex space-x-6 text-sm items-center">
+        <a href="#webdev" class="hover:text-green-400">Web Dev</a>
+        <a href="#architecture" class="hover:text-green-400">Architecture</a>
+        <a href="#extended" class="hover:text-green-400">Extended</a>
+        <a href="#about" class="hover:text-green-400">About</a>
+        <button id="openModal" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-[#0f3d2e] font-semibold">Hire Me</button>
+      </nav>
+      <button id="menuBtn" class="md:hidden text-2xl">☰</button>
+    </div>
+    <div id="mobileMenu" class="hidden flex-col md:hidden bg-[#0f3d2e] p-4 text-center space-y-4 border-t border-green-700">
+      <a href="#webdev" class="hover:text-green-400 block">Web Dev</a>
+      <a href="#architecture" class="hover:text-green-400 block">Architecture</a>
+      <a href="#extended" class="hover:text-green-400 block">Extended</a>
+      <a href="#about" class="hover:text-green-400 block">About</a>
+      <button id="openModalMobile" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-[#0f3d2e] font-semibold">Hire Me</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="h-screen flex flex-col justify-center items-center text-center px-6">
+    
+    <h2 class="text-4xl md:text-6xl font-bold mb-4 hero-enter fade-up-in">Building Digital & Physical Spaces</h2>
+    <p class="text-gray-300 text-lg mb-6 hero-enter fade-up-in">Web Developer | Architect | Creator</p>
+    <button id="openModalHero" class="bg-green-500 hover:bg-green-600 px-6 py-3 rounded text-[#0f3d2e] font-semibold fade-up-in">Hire Me</button>
+
+  </section>
+
+  <!-- Web Development Section -->
+  <section id="webdev" class="py-20 max-w-6xl mx-auto px-6">
+    <h3 class="text-3xl font-bold mb-8 text-green-400 fade-up-in">Web Development</h3>
+    <p class="mb-10 text-gray-300 fade-up-in">Designing scalable, aesthetic, and fast web experiences.</p>
+    <div class="grid md:grid-cols-3 gap-8">
+      <a href="https://minty-9.github.io/jovies-clothiers/#" target="_blank" class="bg-[#1a4d3a] rounded-2xl overflow-hidden shadow-lg fade-up-in">
+        <img src="https://via.placeholder.com/400x250" alt="Web project" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <h4 class="font-semibold mb-2">Jovies Clothiers Site</h4>
+          <p class="text-sm text-gray-300">Elegance Bespoke Fashion Tailored for You.</p>
+        </div>
+      </a>
+      <a href="https://yourprojectlink.com" target="_blank" class="bg-[#1a4d3a] rounded-2xl overflow-hidden shadow-lg fade-up-in">
+        <img src="https://via.placeholder.com/400x250" alt="Web project" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <h4 class="font-semibold mb-2">E-Commerce Interface</h4>
+          <p class="text-sm text-gray-300">High-performance shop experience with modern design.</p>
+        </div>
+      </a>
+      <a href="https://minty-9.github.io/Sapril-cleaning/#" target="_blank" class="bg-[#1a4d3a] rounded-2xl overflow-hidden shadow-lg fade-up-in">
+        <img src="img/sapril.png" alt="Web project" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <h4 class="font-semibold mb-2">Sapril Landing Page</h4>
+          <p class="text-sm text-gray-300">Professional home and office cleaning services tailored to your needs.</p>
+        </div>
+      </a>
+    </div>
+    <div class="text-center mt-10">
+      <button id="openWebModal" class="bg-green-500 hover:bg-green-600 px-6 py-3 rounded text-[#0f3d2e] font-semibold fade-up-in">View All Works</button>
+    </div>
+  </section>
+
+  <!-- Architecture Section -->
+  <section id="architecture" class="py-20 bg-[#122f24] px-6">
+    <div class="max-w-6xl mx-auto">
+      <h3 class="text-3xl font-bold mb-8 text-green-400 fade-up-in">Architecture</h3>
+      <p class="mb-10 text-gray-300 fade-up-in">Merging structural logic with design aesthetics for residential and commercial projects.</p>
+      <div class="grid md:grid-cols-2 gap-8">
+        <a href="https://yourprojectlink.com" target="_blank" class="bg-[#1a4d3a] rounded-2xl overflow-hidden shadow-lg fade-up-in">
+          <img src="https://via.placeholder.com/500x300" alt="Residential Villa" class="w-full h-56 object-cover">
+          <div class="p-6">
+            <h4 class="font-semibold mb-2">Residential Villa</h4>
+            <p class="text-sm text-gray-300">Modern minimalist design emphasizing natural light and flow.</p>
+          </div>
+        </a>
+        <a href="https://yourprojectlink.com" target="_blank" class="bg-[#1a4d3a] rounded-2xl overflow-hidden shadow-lg fade-up-in">
+          <img src="https://via.placeholder.com/500x300" alt="Commercial Hub" class="w-full h-56 object-cover">
+          <div class="p-6">
+            <h4 class="font-semibold mb-2">Commercial Hub</h4>
+            <p class="text-sm text-gray-300">Functional space blending aesthetic appeal and structural efficiency.</p>
+          </div>
+        </a>
+      </div>
+      <div class="text-center mt-10">
+        <a href="#" class="bg-green-500 hover:bg-green-600 px-6 py-3 rounded text-[#0f3d2e] font-semibold inline-block fade-up-in">View All Architecture Works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Extended Capabilities -->
+  <section id="extended" class="py-20 max-w-6xl mx-auto px-6">
+    <h3 class="text-3xl font-bold mb-8 text-green-400 fade-up-in">Extended Skills</h3>
+    <div class="grid md:grid-cols-3 gap-8">
+      <a href="https://example.com/beats" target="_blank" class="bg-[#1a4d3a] p-6 rounded-2xl text-center hover:scale-105 transition-transform fade-up-in">
+        <h4 class="font-semibold mb-2">🎵 Music & Sound Design</h4>
+        <p class="text-sm text-gray-300">Creating beats and soundscapes that complement visual and digital projects.</p>
+      </a>
+      <a href="https://yourprojectlink.com" target="_blank" class="bg-[#1a4d3a] p-6 rounded-2xl text-center fade-up-in">
+        <h4 class="font-semibold mb-2">👕 Fashion & Aesthetics</h4>
+        <p class="text-sm text-gray-300">Exploring minimal fashion design and modeling concepts.</p>
+      </a>
+      <a href="https://yourprojectlink.com" target="_blank" class="bg-[#1a4d3a] p-6 rounded-2xl text-center fade-up-in">
+        <h4 class="font-semibold mb-2">💡 Creative Consultation</h4>
+        <p class="text-sm text-gray-300">Offering structured problem-solving and ideation sessions for projects and startups.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-28 bg-[#122f24] px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h3 class="text-3xl font-bold mb-8 text-green-400 fade-up-in">About Minty</h3>
+      <p class="text-gray-300 leading-relaxed mb-10 fade-up-in">I’m Minty, a web developer and architect merging logic, structure, and creativity. My approach to design—whether digital or physical—is guided by precision, rhythm, and curiosity. I explore intersections between technology, architecture, and art to build experiences that last.</p>
+      <div class="flex justify-center space-x-6 text-3xl py-10 fade-up-in">
+        <a href="https://www.linkedin.com/in/david-simeon-8b136a156" class="text-blue-600 hover:scale-110"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/_mintyyy.__?igsh=bmt2Mnl5cGpucDI%3D&utm_source=qr" class="text-pink-500 hover:scale-110"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.link/c4ub0x" class="text-green-500 hover:scale-110"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://x.com/onlyoneminty?s=21" class="text-sky-400 hover:scale-110"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://www.facebook.com/share/1aYbVmbB9o/?mibextid=wwXIfr" class="text-blue-700 hover:scale-110"><i class="fa-brands fa-facebook"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-10 text-center text-sm text-gray-400 border-t border-gray-700">
+    <p>© <span id="year"></span> Minty. All rights reserved.</p>
+  </footer>
+
+  <!-- Contact Modal -->
+  <div id="contactModal" class="hidden fixed inset-0 bg-black/70 flex justify-center items-center z-50">
+    <div class="bg-[#1a4d3a] p-6 rounded-2xl max-w-md w-full relative">
+      <button id="closeModal" class="absolute top-3 right-3 text-gray-300 text-xl">×</button>
+      <h3 class="text-2xl font-bold mb-4 text-green-400">Get in Touch</h3>
+      <form class="space-y-4">
+        <input type="text" placeholder="Name" class="w-full p-3 rounded bg-[#0f3d2e] border border-green-600 focus:outline-none" required>
+        <input type="email" placeholder="Email" class="w-full p-3 rounded bg-[#0f3d2e] border border-green-600 focus:outline-none" required>
+        <textarea placeholder="Message" class="w-full p-3 rounded bg-[#0f3d2e] border border-green-600 focus:outline-none h-28" required></textarea>
+        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-[#0f3d2e] font-semibold py-3 rounded">Send Message</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Web Projects Modal -->
+  <div id="webModal" class="hidden fixed inset-0 bg-black/70 flex justify-center items-center z-50">
+    <div class="bg-[#1a4d3a] p-6 rounded-2xl max-w-6xl w-full relative max-h-[90vh] overflow-y-auto">
+      <button id="closeWebModal" class="absolute top-3 right-3 text-gray-300 text-xl">×</button>
+      <h3 class="text-2xl font-bold mb-6 text-green-400 text-center">All Web Projects</h3>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="text-center">
+          <a href="#" target="_blank"><img src="https://via.placeholder.com/600x400" class="rounded-lg hover:opacity-80 transition w-full h-48 object-cover"></a>
+          <p class="mt-2 text-gray-200 font-semibold">Project One</p>
+        </div>
+        <div class="text-center">
+          <a href="#" target="_blank"><img src="https://via.placeholder.com/600x400" class="rounded-lg hover:opacity-80 transition w-full h-48 object-cover"></a>
+          <p class="mt-2 text-gray-200 font-semibold">Project Two</p>
+        </div>
+        <div class="text-center">
+          <a href="#" target="_blank"><img src="https://via.placeholder.com/600x400" class="rounded-lg hover:opacity-80 transition w-full h-48 object-cover"></a>
+          <p class="mt-2 text-gray-200 font-semibold">Project Three</p>
+        </div>
+        <div class="text-center">
+          <a href="#" target="_blank"><img src="https://via.placeholder.com/600x400" class="rounded-lg hover:opacity-80 transition w-full h-48 object-cover"></a>
+          <p class="mt-2 text-gray-200 font-semibold">Project Four</p>
+        </div>
+        <div class="text-center">
+          <a href="#" target="_blank"><img src="https://via.placeholder.com/600x400" class="rounded-lg hover:opacity-80 transition w-full h-48 object-cover"></a>
+          <p class="mt-2 text-gray-200 font-semibold">Project Five</p>
+        </div>
+        <div class="text-center">
+          <a href="#" target="_blank"><img src="https://via.placeholder.com/600x400" class="rounded-lg hover:opacity-80 transition w-full h-48 object-cover"></a>
+          <p class="mt-2 text-gray-200 font-semibold">Project Six</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AOS script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    // initialize AOS
+    AOS.init({
+      duration: 700,       // base animation duration (ms)
+      easing: 'ease-out-quart',
+      once: true,          // animate only once while scrolling
+      mirror: false
+    });
+  
+    // hero entrance: add .show after next paint so AOS doesn't conflict
+    window.addEventListener('load', () => {
+      // small delay keeps the entrance smooth
+      requestAnimationFrame(() => {
+        document.querySelectorAll('.hero-enter').forEach(el => el.classList.add('show'));
+      });
+    });
+  </script>
+
+  <script>
+    const faders = document.querySelectorAll('.fade-up-in');
+    const options = { threshold: 0.15 };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          entry.target.classList.remove('hide');
+        } else if (entry.boundingClientRect.top > 0) {
+          // user scrolled up past element
+          entry.target.classList.add('hide');
+          entry.target.classList.remove('show');
+        }
+      });
+    }, options);
+
+    faders.forEach(el => observer.observe(el));
+  </script>
+
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+    const openModalBtns = [document.getElementById('openModal'), document.getElementById('openModalMobile'), document.getElementById('openModalHero')];
+    const modal = document.getElementById('contactModal');
+    const closeModal = document.getElementById('closeModal');
+
+    openModalBtns.forEach(btn => btn.addEventListener('click', () => modal.classList.remove('hidden')));
+    closeModal.addEventListener('click', () => modal.classList.add('hidden'));
+    window.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
+
+    const openWebModal = document.getElementById('openWebModal');
+    const webModal = document.getElementById('webModal');
+    const closeWebModal = document.getElementById('closeWebModal');
+
+    openWebModal.addEventListener('click', () => webModal.classList.remove('hidden'));
+    closeWebModal.addEventListener('click', () => webModal.classList.add('hidden'));
+    window.addEventListener('click', e => { if (e.target === webModal) webModal.classList.add('hidden'); });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
