@@ -4,292 +4,526 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Minty — Web Developer & Architect</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0b0c0e;
+      --bg2: #111316;
+      --bg3: #18191d;
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.14);
+      --text: #f0ede8;
+      --muted: #7a7872;
+      --accent: #b8f0a0;
+      --accent2: #a0d4f0;
+      --tag-bg: rgba(255,255,255,0.06);
+      --radius: 14px;
+      --radius-sm: 8px;
+    }
+
     html { scroll-behavior: smooth; }
 
-    .fade-up-in {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .fade-up-in.show { opacity: 1; transform: translateY(0); }
-    .fade-up-in.hide { opacity: 0; transform: translateY(-40px); }
-
-    .hero-enter { opacity: 0; transform: translateY(18px); }
-    .hero-enter.show { opacity: 1; transform: translateY(0); transition: transform .6s cubic-bezier(.2,.8,.2,1), opacity .6s ease; }
-
-    .project-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-    .project-card:hover { transform: translateY(-4px); }
-
-    /* Hero badge */
-    .hero-badge {
-      display: inline-block;
-      background: #16a34a22;
-      border: 1px solid #16a34a55;
-      color: #4ade80;
-      font-size: 12px;
-      padding: 4px 14px;
-      border-radius: 999px;
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.5px;
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Spot project card */
-    .spot-card {
-      background: linear-gradient(135deg, #1a4d3a 0%, #0f3d2e 100%);
-      border: 1px solid #16a34a40;
-      border-radius: 20px;
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 40px;
+      background: rgba(11,12,14,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 20px;
+      color: var(--text); text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 14px;
+      font-weight: 400; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent); color: #0b0c0e !important;
+      padding: 8px 20px; border-radius: 100px;
+      font-weight: 500 !important; font-size: 14px !important;
+      transition: opacity 0.2s !important; cursor: pointer;
+    }
+    .nav-cta:hover { opacity: 0.85 !important; color: #0b0c0e !important; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--text); font-size: 22px; }
+    .mobile-menu {
+      display: none; position: fixed; top: 65px; left: 0; right: 0; z-index: 99;
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      padding: 20px 40px; flex-direction: column; gap: 16px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: var(--muted); text-decoration: none; font-size: 15px; }
+    .avail-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 12px; color: var(--accent); font-weight: 500;
+      background: rgba(184,240,160,0.08); border: 1px solid rgba(184,240,160,0.2);
+      padding: 5px 13px; border-radius: 100px;
+    }
+    .avail-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; padding: 120px 40px 80px;
+      max-width: 900px; margin: 0 auto;
+    }
+    .hero-badge { margin-bottom: 28px; }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(44px, 7vw, 80px);
+      font-weight: 800; line-height: 1.06;
+      letter-spacing: -0.03em; margin-bottom: 24px;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero-sub {
+      font-size: 18px; color: var(--muted); max-width: 520px;
+      line-height: 1.6; margin-bottom: 36px; font-weight: 300;
+    }
+    .hero-meta { font-size: 13px; color: var(--muted); margin-bottom: 40px; letter-spacing: 0.04em; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent); color: #0b0c0e;
+      padding: 13px 28px; border-radius: 100px;
+      font-weight: 500; font-size: 15px; text-decoration: none;
+      border: none; cursor: pointer; transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      padding: 13px 28px; border-radius: 100px;
+      font-weight: 400; font-size: 15px; text-decoration: none;
+      border: 1px solid var(--border-hover); transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover { background: var(--bg3); border-color: rgba(255,255,255,0.2); }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 40px; max-width: 900px; margin: 0 auto; }
+    .section-label {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::after { content:''; flex:1; height:1px; background: var(--border); }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;
+    }
+    .section-sub { font-size: 15px; color: var(--muted); margin-bottom: 56px; font-weight: 300; }
+
+    /* ── FEATURED PROJECT ── */
+    .featured-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
       overflow: hidden;
-      transition: border-color 0.2s;
+      transition: border-color 0.25s;
+      margin-bottom: 20px;
     }
-    .spot-card:hover { border-color: #16a34a90; }
+    .featured-card:hover { border-color: var(--border-hover); }
+    .featured-img {
+      width: 100%; height: 260px; object-fit: cover;
+      display: block; border-bottom: 1px solid var(--border);
+      background: var(--bg3);
+    }
+    .featured-body { padding: 32px; }
+    .featured-pill {
+      display: inline-block; font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent); background: rgba(184,240,160,0.1);
+      border: 1px solid rgba(184,240,160,0.2);
+      padding: 4px 12px; border-radius: 100px; margin-bottom: 16px;
+    }
+    .featured-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px; font-weight: 700;
+      letter-spacing: -0.02em; margin-bottom: 12px;
+    }
+    .featured-desc { color: var(--muted); font-size: 15px; line-height: 1.7; margin-bottom: 16px; font-weight: 300; }
+    .featured-why {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px; margin-bottom: 24px;
+      font-size: 14px; color: var(--muted); line-height: 1.7;
+    }
+    .featured-why strong { color: var(--text); font-weight: 500; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .tag {
+      font-size: 12px; padding: 5px 12px; border-radius: 100px;
+      background: var(--tag-bg); border: 1px solid var(--border);
+      color: var(--muted); font-weight: 400;
+    }
+    .project-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .link-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 13px; font-weight: 500; padding: 9px 18px;
+      border-radius: 100px; text-decoration: none; transition: all 0.2s;
+    }
+    .link-btn-solid {
+      background: var(--accent); color: #0b0c0e;
+    }
+    .link-btn-solid:hover { opacity: 0.85; }
+    .link-btn-outline {
+      border: 1px solid var(--border-hover); color: var(--text);
+    }
+    .link-btn-outline:hover { background: var(--bg3); border-color: rgba(255,255,255,0.2); }
+    .link-btn-loom {
+      border: 1px solid rgba(160, 212, 240, 0.3); color: var(--accent2);
+    }
+    .link-btn-loom:hover { background: rgba(160,212,240,0.06); }
+
+    /* ── OTHER PROJECTS ── */
+    .other-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px; margin-bottom: 8px;
+    }
+    .other-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 18px 20px;
+      text-decoration: none; transition: border-color 0.2s;
+    }
+    .other-card:hover { border-color: var(--border-hover); }
+    .other-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+    .other-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
+    .other-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .other-tag { font-size: 11px; color: var(--muted); background: var(--tag-bg); padding: 3px 9px; border-radius: 100px; }
+    .other-note { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 8px; }
+
+    /* ── ARCHITECTURE ── */
+    .arch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .arch-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; text-decoration: none;
+      transition: border-color 0.2s; display: block;
+    }
+    .arch-card:hover { border-color: var(--border-hover); }
+    .arch-img {
+      width: 100%; height: 160px; object-fit: cover;
+      background: var(--bg3); display: block;
+    }
+    .arch-body { padding: 18px 20px; }
+    .arch-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .arch-sub { font-size: 13px; color: var(--muted); }
+    .arch-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--muted); font-size: 14px; text-decoration: none;
+      border: 1px solid var(--border); padding: 9px 20px;
+      border-radius: 100px; transition: all 0.2s;
+    }
+    .arch-link:hover { border-color: var(--border-hover); color: var(--text); }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    .about-text p { color: var(--muted); font-size: 15px; line-height: 1.75; margin-bottom: 16px; font-weight: 300; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-text strong { color: var(--text); font-weight: 500; }
+    .skills-block { }
+    .skills-label { font-size: 12px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+    .skills-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .skill-chip {
+      font-size: 13px; padding: 6px 14px; border-radius: 100px;
+      background: var(--tag-bg); border: 1px solid var(--border); color: var(--text);
+    }
+    .socials { display: flex; gap: 12px; flex-wrap: wrap; }
+    .social-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--muted); text-decoration: none;
+      border: 1px solid var(--border); padding: 7px 14px;
+      border-radius: 100px; transition: all 0.2s;
+    }
+    .social-link:hover { color: var(--text); border-color: var(--border-hover); }
+
+    /* ── DIVIDER ── */
+    .divider { border: none; border-top: 1px solid var(--border); max-width: 900px; margin: 0 auto; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 32px 40px;
+      font-size: 13px; color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center; padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 36px; width: 100%; max-width: 480px;
+    }
+    .modal-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+    .modal h3 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; }
+    .modal-close { background: none; border: none; color: var(--muted); font-size: 22px; cursor: pointer; line-height: 1; }
+    .modal-close:hover { color: var(--text); }
+    .modal p { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+    .form-group input, .form-group textarea {
+      width: 100%; background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 11px 14px;
+      outline: none; transition: border-color 0.2s; resize: vertical;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--border-hover); }
+    .form-group textarea { min-height: 100px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .hero { padding: 110px 20px 60px; }
+      section { padding: 70px 20px; }
+      .about-grid { grid-template-columns: 1fr; gap: 36px; }
+      .arch-grid { grid-template-columns: 1fr; }
+      .other-grid { grid-template-columns: 1fr 1fr; }
+      footer { padding: 24px 20px; }
+    }
   </style>
 </head>
-<body class="bg-[#0f3d2e] text-gray-100 font-sans">
+<body>
 
-  <!-- Navbar -->
-  <header class="fixed w-full bg-[#0f3d2e]/90 backdrop-blur-md z-50 py-3">
-    <div class="max-w-6xl mx-auto flex justify-between items-center px-4">
-      <h1 class="text-xl font-bold tracking-wide">Minty</h1>
-      <nav class="hidden md:flex space-x-6 text-sm items-center">
-        <a href="#webdev" class="hover:text-green-400 transition">Web Dev</a>
-        <a href="#architecture" class="hover:text-green-400 transition">Architecture</a>
-        <a href="#about" class="hover:text-green-400 transition">About</a>
-        <button id="openModal" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-[#0f3d2e] font-semibold transition">Hire Me</button>
-      </nav>
-      <button id="menuBtn" class="md:hidden text-2xl">☰</button>
-    </div>
-    <div id="mobileMenu" class="hidden flex-col md:hidden bg-[#0f3d2e] p-4 text-center space-y-4 border-t border-green-900">
-      <a href="#webdev" class="hover:text-green-400 block">Web Dev</a>
-      <a href="#architecture" class="hover:text-green-400 block">Architecture</a>
-      <a href="#about" class="hover:text-green-400 block">About</a>
-      <button id="openModalMobile" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-[#0f3d2e] font-semibold w-full">Hire Me</button>
-    </div>
-  </header>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Minty</a>
+  <ul class="nav-links">
+    <li><a href="#webdev">Web Dev</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#" class="nav-cta" id="nav-hire-btn">Hire Me</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
+</nav>
 
-  <!-- Hero -->
-  <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
-    <span class="hero-badge hero-enter">Available for work</span>
-    <h2 class="text-4xl md:text-6xl font-bold mb-4 hero-enter leading-tight">Building Digital &<br>Physical Spaces</h2>
-    <p class="text-gray-300 text-lg mb-3 hero-enter">Full-Stack Web Developer · Architect · Lagos, Nigeria</p>
-    <p class="text-gray-400 text-sm max-w-xl mb-8 hero-enter">I build websites and web apps that solve real problems — from restaurant management systems to business landing pages. Available for freelance and remote work.</p>
-    <div class="flex gap-4 hero-enter flex-wrap justify-center">
-      <button id="openModalHero" class="bg-green-500 hover:bg-green-600 px-6 py-3 rounded text-[#0f3d2e] font-semibold transition">Hire Me</button>
-      <a href="#webdev" class="border border-green-600 hover:border-green-400 px-6 py-3 rounded text-green-400 font-semibold transition">View My Work</a>
-    </div>
-  </section>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#webdev">Web Dev</a>
+  <a href="#architecture">Architecture</a>
+  <a href="#about">About</a>
+  <a href="#" id="mobile-hire-btn">Hire Me</a>
+</div>
 
-  <!-- Web Development Section -->
-  <section id="webdev" class="py-20 max-w-6xl mx-auto px-6">
-    <h3 class="text-3xl font-bold mb-3 text-green-400 fade-up-in">Web Development</h3>
-    <p class="mb-12 text-gray-400 fade-up-in">Full-stack projects built with PHP, JavaScript, MySQL, and Tailwind CSS.</p>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">
+    <span class="avail-badge"><span class="avail-dot"></span>Available for work</span>
+  </div>
+  <h1>Building <em>Digital</em> &amp; Physical Spaces</h1>
+  <p class="hero-sub">Full-stack web developer and architect based in Lagos. I build web systems that solve real operational problems — from the database up to the interface.</p>
+  <p class="hero-meta">Full-Stack Web Developer &nbsp;·&nbsp; Architect &nbsp;·&nbsp; Lagos, Nigeria</p>
+  <div class="hero-actions">
+    <button class="btn-primary" id="hero-hire-btn">Hire Me</button>
+    <a href="#webdev" class="btn-ghost">View My Work</a>
+  </div>
+</div>
 
-    <!-- Hero project — The Spot -->
-    <div class="spot-card mb-8 fade-up-in">
-      <div class="md:flex">
-        <div class="md:w-1/2">
-          <img src="img/spot.png" alt="The Spot Restaurant OS" class="w-full h-64 md:h-full object-cover">
-        </div>
-        <div class="md:w-1/2 p-8 flex flex-col justify-center">
-          <span class="text-xs font-medium text-green-400 uppercase tracking-widest mb-3">Featured Project</span>
-          <h4 class="text-2xl font-bold mb-3">The Spot — Restaurant OS</h4>
-          <p class="text-gray-300 text-sm leading-relaxed mb-4">A full restaurant management system with a public ordering menu, live kitchen dashboard, and admin panel. Built with vanilla PHP, SQLite, JavaScript, and Tailwind CSS.</p>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="text-xs bg-green-900/50 text-green-400 px-3 py-1 rounded-full border border-green-800">PHP</span>
-            <span class="text-xs bg-green-900/50 text-green-400 px-3 py-1 rounded-full border border-green-800">SQLite</span>
-            <span class="text-xs bg-green-900/50 text-green-400 px-3 py-1 rounded-full border border-green-800">JavaScript</span>
-            <span class="text-xs bg-green-900/50 text-green-400 px-3 py-1 rounded-full border border-green-800">Tailwind CSS</span>
-          </div>
-          <div class="flex gap-3">
-            <a href="https://restaurant-ordering-system-lstg.onrender.com" target="_blank" class="bg-green-500 hover:bg-green-600 px-5 py-2 rounded text-[#0f3d2e] font-semibold text-sm transition">Live Demo</a>
-            <a href="https://github.com/minty-9/restaurant-ordering-system" target="_blank" class="border border-green-700 hover:border-green-400 px-5 py-2 rounded text-green-400 text-sm transition">GitHub</a>
-          </div>
-        </div>
-      </div>
-    </div>
+<hr class="divider" />
 
-    <!-- Other projects grid -->
-    <div class="grid md:grid-cols-3 gap-6">
-      <a href="https://minty-9.github.io/jovies-clothiers/" target="_blank" class="project-card bg-[#1a4d3a] rounded-2xl overflow-hidden fade-up-in">
-        <img src="img/jov.jpg" alt="Jovies Clothiers" class="w-full h-48 object-cover">
-        <div class="p-5">
-          <h4 class="font-semibold mb-1">Jovies Clothiers</h4>
-          <p class="text-sm text-gray-400">Bespoke fashion website for a clothing brand.</p>
-          <div class="flex gap-2 mt-3">
-            <span class="text-xs bg-green-900/50 text-green-400 px-2 py-0.5 rounded-full border border-green-800">HTML</span>
-            <span class="text-xs bg-green-900/50 text-green-400 px-2 py-0.5 rounded-full border border-green-800">CSS</span>
-          </div>
-        </div>
-      </a>
+<!-- WEB DEV -->
+<section id="webdev">
+  <p class="section-label">Web Development</p>
+  <h2 class="section-title">Projects</h2>
+  <p class="section-sub">Full-stack systems built with PHP, MySQL, JavaScript, and CSS.</p>
 
-      <a href="https://minty-9.github.io/Sapril-cleaning/" target="_blank" class="project-card bg-[#1a4d3a] rounded-2xl overflow-hidden fade-up-in">
-        <img src="img/sapril.jpg" alt="Sapril Cleaning" class="w-full h-48 object-cover">
-        <div class="p-5">
-          <h4 class="font-semibold mb-1">Sapril Cleaning</h4>
-          <p class="text-sm text-gray-400">Landing page for a professional cleaning business.</p>
-          <div class="flex gap-2 mt-3">
-            <span class="text-xs bg-green-900/50 text-green-400 px-2 py-0.5 rounded-full border border-green-800">HTML</span>
-            <span class="text-xs bg-green-900/50 text-green-400 px-2 py-0.5 rounded-full border border-green-800">CSS</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="https://minty-9.github.io/task-manager/index.html" target="_blank" class="project-card bg-[#1a4d3a] rounded-2xl overflow-hidden fade-up-in">
-        <img src="img/task.jpg" alt="Task Manager" class="w-full h-48 object-cover">
-        <div class="p-5">
-          <h4 class="font-semibold mb-1">Task Manager App</h4>
-          <p class="text-sm text-gray-400">A clean app to organize and track daily tasks.</p>
-          <div class="flex gap-2 mt-3">
-            <span class="text-xs bg-green-900/50 text-green-400 px-2 py-0.5 rounded-full border border-green-800">JavaScript</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="https://minty-9.github.io/expense-tracker/index.html" target="_blank" class="project-card bg-[#1a4d3a] rounded-2xl overflow-hidden fade-up-in">
-        <img src="img/expense.jpg" alt="Expense Tracker" class="w-full h-48 object-cover">
-        <div class="p-5">
-          <h4 class="font-semibold mb-1">Revenue & Expense Tracker</h4>
-          <p class="text-sm text-gray-400">Track income and expenses with visual summaries.</p>
-          <div class="flex gap-2 mt-3">
-            <span class="text-xs bg-green-900/50 text-green-400 px-2 py-0.5 rounded-full border border-green-800">JavaScript</span>
-          </div>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <!-- Architecture Section -->
-  <section id="architecture" class="py-20 bg-[#122f24] px-6">
-    <div class="max-w-6xl mx-auto">
-      <h3 class="text-3xl font-bold mb-3 text-green-400 fade-up-in">Architecture</h3>
-      <p class="mb-12 text-gray-400 fade-up-in">Structural design meets aesthetic precision — residential and commercial projects.</p>
-      <div class="grid md:grid-cols-2 gap-8">
-        <a href="architecture.html" class="project-card bg-[#1a4d3a] rounded-2xl overflow-hidden fade-up-in">
-          <img src="img/resi.jpg" alt="Residential Villa" class="w-full h-56 object-cover">
-          <div class="p-6">
-            <h4 class="font-semibold mb-2">Residential Villa</h4>
-            <p class="text-sm text-gray-400">Modern minimalist design emphasizing natural light and flow.</p>
-          </div>
-        </a>
-        <a href="architecture.html" class="project-card bg-[#1a4d3a] rounded-2xl overflow-hidden fade-up-in">
-          <img src="img/commer.jpg" alt="Commercial Hub" class="w-full h-56 object-cover">
-          <div class="p-6">
-            <h4 class="font-semibold mb-2">Commercial Hub</h4>
-            <p class="text-sm text-gray-400">Functional space blending aesthetic appeal and structural efficiency.</p>
-          </div>
-        </a>
-      </div>
-      <div class="text-center mt-10">
-        <a href="architecture.html" class="bg-green-500 hover:bg-green-600 px-6 py-3 rounded text-[#0f3d2e] font-semibold inline-block transition fade-up-in">View All Architecture Works</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- About -->
-  <section id="about" class="py-28 px-6">
-    <div class="max-w-4xl mx-auto text-center">
-      <h3 class="text-3xl font-bold mb-6 text-green-400 fade-up-in">About Minty</h3>
-      <p class="text-gray-300 leading-relaxed mb-6 fade-up-in text-lg">
-        I'm Simeon (Minty) — a full-stack web developer and architect based in Lagos, Nigeria. I build websites and web applications that actually work for businesses, from custom ordering systems to landing pages that convert.
+  <!-- FEATURED -->
+  <div class="featured-card">
+    <img src="img/spot.png" alt="The Spot Restaurant OS dashboard" class="featured-img" />
+    <div class="featured-body">
+      <span class="featured-pill">★ Featured Project</span>
+      <h3 class="featured-title">The Spot — Restaurant OS</h3>
+      <p class="featured-desc">
+        A full restaurant management system with a public ordering menu, live kitchen dashboard, and admin panel. Built entirely solo with vanilla PHP, SQLite, JavaScript, and Tailwind CSS.
       </p>
-      <p class="text-gray-400 leading-relaxed mb-10 fade-up-in">
-        My background in architecture gives me a unique edge — I think in systems, structure, and user flow before I write a single line of code. I work with HTML, CSS, JavaScript, PHP, and SQLite, and I'm available for both local and international projects.
-      </p>
-
-      <!-- Skills -->
-      <div class="flex flex-wrap justify-center gap-3 mb-12 fade-up-in">
-        <?php foreach(['HTML', 'CSS', 'JavaScript', 'PHP', 'SQLite', 'MySQL', 'Tailwind CSS', 'Git & GitHub'] as $skill): ?>
-        <span class="text-sm bg-[#1a4d3a] border border-green-800 text-green-300 px-4 py-1.5 rounded-full"><?= $skill ?></span>
-        <?php endforeach; ?>
+      <div class="featured-why">
+        <strong>Why I built it:</strong> Most restaurant POS tools are either too expensive for small local restaurants or don't fit the way Nigerian food businesses actually operate — split billing, table-based ordering, cash-first workflows. I built this system from scratch to solve that gap. It handles live orders, kitchen queues, inventory tracking, staff roles, and billing entirely from the browser — no third-party dependencies.
       </div>
-
-      <!-- Socials -->
-      <div class="flex justify-center space-x-6 text-2xl fade-up-in">
-        <a href="https://github.com/minty-9" target="_blank" class="text-gray-400 hover:text-white transition" title="GitHub"><i class="fa-brands fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/david-simeon-8b136a156" target="_blank" class="text-blue-400 hover:text-blue-300 transition" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="https://wa.link/c4ub0x" target="_blank" class="text-green-400 hover:text-green-300 transition" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-        <a href="https://x.com/onlyoneminty?s=21" target="_blank" class="text-sky-400 hover:text-sky-300 transition" title="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="https://www.instagram.com/_mintyyy.__" target="_blank" class="text-pink-400 hover:text-pink-300 transition" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <div class="tags">
+        <span class="tag">PHP</span>
+        <span class="tag">SQLite</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Tailwind CSS</span>
+        <span class="tag">Custom MVC</span>
+        <span class="tag">Role-based auth</span>
       </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="py-8 text-center text-sm text-gray-500 border-t border-green-900">
-    <p>© <span id="year"></span> Minty. All rights reserved.</p>
-  </footer>
-
-  <!-- Contact Modal -->
-  <div id="contactModal" class="hidden fixed inset-0 bg-black/70 flex justify-center items-center z-50 px-4">
-    <div class="bg-[#1a4d3a] p-6 rounded-2xl max-w-md w-full relative">
-      <button id="closeModal" class="absolute top-3 right-4 text-gray-300 text-2xl leading-none">×</button>
-      <h3 class="text-xl font-bold mb-1 text-green-400">Get in Touch</h3>
-      <p class="text-gray-400 text-sm mb-5">I'll get back to you within 24 hours.</p>
-      <form class="space-y-4" onsubmit="handleContactForm(event)">
-        <input type="text" placeholder="Your name" class="w-full p-3 rounded-lg bg-[#0f3d2e] border border-green-800 focus:outline-none focus:border-green-500 text-sm" required>
-        <input type="email" placeholder="Your email" class="w-full p-3 rounded-lg bg-[#0f3d2e] border border-green-800 focus:outline-none focus:border-green-500 text-sm" required>
-        <textarea placeholder="Tell me about your project..." class="w-full p-3 rounded-lg bg-[#0f3d2e] border border-green-800 focus:outline-none focus:border-green-500 h-28 text-sm resize-none" required></textarea>
-        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-[#0f3d2e] font-semibold py-3 rounded-lg transition text-sm">Send Message</button>
-      </form>
+      <div class="project-links">
+        <a href="https://restaurant-ordering-system-lstg.onrender.com" target="_blank" class="link-btn link-btn-solid">Live Demo ↗</a>
+        <a href="https://github.com/minty-9/restaurant-ordering-system" target="_blank" class="link-btn link-btn-outline">GitHub</a>
+        <!-- REPLACE the href below with your actual Loom link when ready -->
+        <a href="YOUR_LOOM_LINK_HERE" target="_blank" class="link-btn link-btn-loom">▶ Watch Walkthrough</a>
+      </div>
     </div>
   </div>
 
-  <script>
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+  <!-- OTHER WORK -->
+  <p style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;margin-top:40px;">Other work</p>
+  <div class="other-grid">
+    <a href="https://minty-9.github.io/jovies-clothiers/" target="_blank" class="other-card">
+      <div class="other-title">Jovies Clothiers</div>
+      <div class="other-desc">Bespoke fashion website for a clothing brand.</div>
+      <div class="other-tags"><span class="other-tag">HTML</span><span class="other-tag">CSS</span></div>
+    </a>
+    <a href="https://minty-9.github.io/Sapril-cleaning/" target="_blank" class="other-card">
+      <div class="other-title">Sapril Cleaning</div>
+      <div class="other-desc">Landing page for a professional cleaning business.</div>
+      <div class="other-tags"><span class="other-tag">HTML</span><span class="other-tag">CSS</span></div>
+    </a>
+    <a href="https://minty-9.github.io/task-manager/index.html" target="_blank" class="other-card">
+      <div class="other-title">Task Manager</div>
+      <div class="other-desc">App to organise and track daily tasks with priority and due dates.</div>
+      <div class="other-tags"><span class="other-tag">JavaScript</span></div>
+    </a>
+    <a href="https://minty-9.github.io/expense-tracker/" target="_blank" class="other-card">
+      <div class="other-title">Expense Tracker</div>
+      <div class="other-desc">Track income and expenses with visual summaries.</div>
+      <div class="other-tags"><span class="other-tag">JavaScript</span></div>
+    </a>
+  </div>
+  <p class="other-note">More projects coming soon — currently building a multi-tenant booking system.</p>
+</section>
 
-    // Mobile menu
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+<hr class="divider" />
 
-    // Close mobile menu on link click
-    mobileMenu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-    });
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <p class="section-label">Architecture</p>
+  <h2 class="section-title">Design Work</h2>
+  <p class="section-sub">Structural design meets aesthetic precision — residential and commercial projects.</p>
+  <div class="arch-grid">
+    <a href="architecture.html" class="arch-card">
+      <div class="arch-img"></div>
+      <div class="arch-body">
+        <div class="arch-name">Residential Villa</div>
+        <div class="arch-sub">Modern minimalist design emphasising natural light and flow.</div>
+      </div>
+    </a>
+    <a href="architecture.html" class="arch-card">
+      <div class="arch-img"></div>
+      <div class="arch-body">
+        <div class="arch-name">Commercial Hub</div>
+        <div class="arch-sub">Functional space blending aesthetic appeal and structural efficiency.</div>
+      </div>
+    </a>
+  </div>
+  <a href="architecture.html" class="arch-link">View All Architecture Works →</a>
+</section>
 
-    // Contact modal
-    const modal = document.getElementById('contactModal');
-    const openBtns = ['openModal', 'openModalMobile', 'openModalHero'].map(id => document.getElementById(id));
-    openBtns.forEach(btn => btn && btn.addEventListener('click', () => modal.classList.remove('hidden')));
-    document.getElementById('closeModal').addEventListener('click', () => modal.classList.add('hidden'));
-    window.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
+<hr class="divider" />
 
-    // Contact form — opens email client as fallback
-    function handleContactForm(e) {
-      e.preventDefault();
-      const name = e.target[0].value;
-      const email = e.target[1].value;
-      const message = e.target[2].value;
-      window.location.href = `mailto:simeondavid99@gmail.com?subject=Project Inquiry from ${encodeURIComponent(name)}&body=${encodeURIComponent(message + '\n\nReply to: ' + email)}`;
-      modal.classList.add('hidden');
-    }
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">About</p>
+  <h2 class="section-title">About Minty</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm <strong>Simeon (Minty)</strong> — a full-stack web developer and architect based in Lagos, Nigeria. I build web systems that solve real operational problems, from the database design up to the user interface.
+      </p>
+      <p>
+        My most complete project is <strong>The Spot</strong> — a full restaurant operating system I designed and built entirely solo. It handles live table orders, kitchen dashboards, inventory, staff roles, and billing. No framework, no team — just a problem I decided to solve.
+      </p>
+      <p>
+        My background in architecture gives me an edge most developers don't have — I think in systems, structure, and user flow before I write a single line of code. I'm currently open to <strong>remote developer roles</strong> and freelance projects where I can build something real.
+      </p>
+    </div>
+    <div class="skills-block">
+      <p class="skills-label">Tech stack</p>
+      <div class="skills-list">
+        <span class="skill-chip">PHP</span>
+        <span class="skill-chip">MySQL</span>
+        <span class="skill-chip">SQLite</span>
+        <span class="skill-chip">JavaScript</span>
+        <span class="skill-chip">HTML5</span>
+        <span class="skill-chip">CSS3</span>
+        <span class="skill-chip">Tailwind CSS</span>
+        <span class="skill-chip">REST APIs</span>
+        <span class="skill-chip">Custom MVC</span>
+      </div>
+      <p class="skills-label">Find me</p>
+      <div class="socials">
+        <a href="https://github.com/minty-9" target="_blank" class="social-link">GitHub</a>
+        <a href="https://www.linkedin.com/in/david-simeon-8b136a156" target="_blank" class="social-link">LinkedIn</a>
+        <a href="https://wa.link/c4ub0x" target="_blank" class="social-link">WhatsApp</a>
+        <a href="https://x.com/onlyoneminty?s=21" target="_blank" class="social-link">X / Twitter</a>
+        <a href="https://www.instagram.com/_mintyyy.__" target="_blank" class="social-link">Instagram</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // Fade-up animations
-    const faders = document.querySelectorAll('.fade-up-in');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-          entry.target.classList.remove('hide');
-        } else if (entry.boundingClientRect.top > 0) {
-          entry.target.classList.add('hide');
-          entry.target.classList.remove('show');
-        }
-      });
-    }, { threshold: 0.1 });
-    faders.forEach(el => observer.observe(el));
+<footer>
+  &copy; Minty. All rights reserved.
+</footer>
 
-    // Hero entrance
-    window.addEventListener('load', () => {
-      requestAnimationFrame(() => {
-        document.querySelectorAll('.hero-enter').forEach((el, i) => {
-          setTimeout(() => el.classList.add('show'), i * 120);
-        });
-      });
-    });
-  </script>
+<!-- HIRE ME MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Get in Touch</h3>
+      <button class="modal-close" id="modal-close">&times;</button>
+    </div>
+    <p>I'll get back to you within 24 hours.</p>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" placeholder="Your name" />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="your@email.com" />
+    </div>
+    <div class="form-group">
+      <label for="message">Message</label>
+      <textarea id="message" placeholder="Tell me about your project..."></textarea>
+    </div>
+    <button class="btn-primary" style="width:100%;text-align:center;" onclick="sendMail()">Send Message</button>
+  </div>
+</div>
+
+<script>
+  // Nav hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+
+  // Modal open/close
+  const modal = document.getElementById('modal');
+  const openModal = () => modal.classList.add('open');
+  const closeModal = () => modal.classList.remove('open');
+  document.getElementById('nav-hire-btn').addEventListener('click', e => { e.preventDefault(); openModal(); });
+  document.getElementById('hero-hire-btn').addEventListener('click', openModal);
+  document.getElementById('mobile-hire-btn').addEventListener('click', e => { e.preventDefault(); openModal(); });
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+  // Send mail
+  function sendMail() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    if (!name || !email || !message) { alert('Please fill in all fields.'); return; }
+    window.location.href = `mailto:your@email.com?subject=Portfolio enquiry from ${encodeURIComponent(name)}&body=${encodeURIComponent(message + '\n\nFrom: ' + email)}`;
+  }
+</script>
 </body>
 </html>
