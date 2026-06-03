@@ -4,30 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Minty — Web Developer & Architect</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" />
   <style>
-    :root {
-      --bg-base:    #0d1117;
-      --bg-card:    #161b22;
-      --bg-card2:   #1c2330;
-      --border:     rgba(48,220,128,0.10);
-      --border-h:   rgba(48,220,128,0.25);
-      --green:      #30dc80;
-      --green-dim:  #22c55e;
-      --green-pale: rgba(48,220,128,0.08);
-      --green-text: #4ade80;
-      --muted:      #8b949e;
-      --text:       #e6edf3;
-    }
-
+    /* ── RESET ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+
+    /* ── TOKENS ── */
+    :root {
+      --bg:        #0d1117;
+      --bg-card:   #161b22;
+      --bg-card2:  #1c2330;
+      --border:    rgba(48,220,128,0.10);
+      --border-h:  rgba(48,220,128,0.28);
+      --green:     #30dc80;
+      --green-dim: #22c55e;
+      --green-t:   #4ade80;
+      --green-bg:  rgba(48,220,128,0.07);
+      --muted:     #8b949e;
+      --text:      #e6edf3;
+      --r:         12px;
+      --r-lg:      18px;
+    }
+
     body {
-      background: var(--bg-base);
+      background: var(--bg);
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
       font-size: 16px;
@@ -35,530 +39,520 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── TYPOGRAPHY ── */
-    .font-syne { font-family: 'Syne', sans-serif; }
+    img { display: block; max-width: 100%; }
+    a   { text-decoration: none; }
 
-    /* ── NOISE TEXTURE overlay for depth ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0; pointer-events: none; z-index: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      opacity: 0.4;
-    }
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(48,220,128,0.18); border-radius: 3px; }
+
+    /* ── TYPOGRAPHY ── */
+    .syne { font-family: 'Syne', sans-serif; }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+    .wide      { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    section    { padding: 88px 0; }
+    hr.div     { border: none; border-top: 1px solid var(--border); }
 
     /* ── NAV ── */
     header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(13,17,23,0.88);
-      backdrop-filter: blur(16px);
+      background: rgba(13,17,23,0.90);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
     }
-
-    /* ── HERO ── */
-    .hero-grid-bg {
-      position: absolute; inset: 0; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(48,220,128,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(48,220,128,0.04) 1px, transparent 1px);
-      background-size: 48px 48px;
-      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 15px 24px; max-width: 1100px; margin: 0 auto;
     }
-    .hero-glow {
-      position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
-      width: 700px; height: 400px; pointer-events: none;
-      background: radial-gradient(ellipse at center, rgba(48,220,128,0.12) 0%, transparent 70%);
+    .nav-logo { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { color: var(--muted); font-size: 14px; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .hamburger { display: none; background: none; border: none; color: var(--text); font-size: 21px; cursor: pointer; padding: 4px; }
+    .mobile-nav {
+      display: none; flex-direction: column; gap: 14px;
+      padding: 16px 24px 20px;
+      border-top: 1px solid var(--border);
+      background: var(--bg-card);
     }
-
-    /* ── AVAILABLE BADGE ── */
-    .avail-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 12px; color: var(--green-text); font-weight: 500;
-      background: rgba(74,222,128,0.08);
-      border: 1px solid rgba(74,222,128,0.22);
-      padding: 5px 14px; border-radius: 999px;
-      letter-spacing: 0.03em;
-    }
-    .avail-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--green-text);
-      animation: pulse 2.2s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.45;transform:scale(0.85)} }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { color: var(--muted); font-size: 15px; }
 
     /* ── BUTTONS ── */
     .btn-green {
       display: inline-flex; align-items: center; gap: 7px;
       background: var(--green); color: #0d1117;
+      font-family: 'DM Sans', sans-serif;
       font-weight: 600; font-size: 14px;
-      padding: 11px 24px; border-radius: 8px;
-      border: none; cursor: pointer; text-decoration: none;
+      padding: 10px 22px; border-radius: var(--r);
+      border: none; cursor: pointer;
       transition: background 0.2s, transform 0.15s;
     }
-    .btn-green:hover { background: #22c55e; transform: translateY(-1px); }
+    .btn-green:hover { background: var(--green-dim); transform: translateY(-1px); }
+
     .btn-outline {
       display: inline-flex; align-items: center; gap: 7px;
-      background: transparent; color: var(--green-text);
+      background: transparent; color: var(--green-t);
+      font-family: 'DM Sans', sans-serif;
       font-weight: 500; font-size: 14px;
-      padding: 11px 24px; border-radius: 8px;
-      border: 1px solid rgba(74,222,128,0.3); cursor: pointer; text-decoration: none;
+      padding: 10px 22px; border-radius: var(--r);
+      border: 1px solid rgba(74,222,128,0.28); cursor: pointer;
       transition: border-color 0.2s, background 0.2s, transform 0.15s;
     }
-    .btn-outline:hover { border-color: rgba(74,222,128,0.6); background: rgba(74,222,128,0.05); transform: translateY(-1px); }
+    .btn-outline:hover { border-color: rgba(74,222,128,0.55); background: var(--green-bg); transform: translateY(-1px); }
 
-    /* ── SECTION LABEL ── */
-    .section-eyebrow {
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; padding: 120px 24px 80px;
+      max-width: 860px; margin: 0 auto; position: relative;
+    }
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(48,220,128,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(48,220,128,0.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+    }
+    .hero-glow {
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 360px; pointer-events: none;
+      background: radial-gradient(ellipse at center, rgba(48,220,128,0.10) 0%, transparent 70%);
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(40px, 7.5vw, 76px);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -0.03em; margin-bottom: 20px;
+    }
+    .hero h1 em { font-style: normal; color: var(--green-t); }
+    .hero-sub  { font-size: 17px; color: var(--muted); max-width: 480px; line-height: 1.68; margin-bottom: 14px; font-weight: 300; }
+    .hero-meta { font-size: 13px; color: var(--muted); letter-spacing: 0.04em; margin-bottom: 34px; opacity: 0.7; }
+    .hero-ctas { display: flex; gap: 11px; flex-wrap: wrap; }
+
+    /* ── AVAILABLE BADGE ── */
+    .avail {
       display: inline-flex; align-items: center; gap: 8px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--green-text);
-      margin-bottom: 12px;
+      font-size: 12px; color: var(--green-t); font-weight: 500;
+      background: rgba(74,222,128,0.07);
+      border: 1px solid rgba(74,222,128,0.22);
+      padding: 5px 13px; border-radius: 999px;
+      margin-bottom: 24px;
     }
-    .section-eyebrow::before {
-      content: ''; display: block;
-      width: 20px; height: 2px;
-      background: var(--green-dim); border-radius: 2px;
-    }
+    .avail-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green-t); animation: pulse 2.2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.38} }
 
-    /* ── CARDS ── */
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      transition: border-color 0.22s, transform 0.22s;
+    /* ── SECTION EYEBROW ── */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--green-t); margin-bottom: 10px;
     }
-    .card:hover { border-color: var(--border-h); transform: translateY(-3px); }
+    .eyebrow::before { content:''; display:block; width:18px; height:2px; background:var(--green-dim); border-radius:2px; }
+    .section-title  { font-family:'Syne',sans-serif; font-size:clamp(26px,4vw,38px); font-weight:700; letter-spacing:-0.02em; margin-bottom:7px; }
+    .section-sub    { font-size:15px; color:var(--muted); margin-bottom:48px; font-weight:300; }
 
     /* ── FEATURED CARD ── */
-    .featured-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 20px; overflow: hidden;
-      transition: border-color 0.22s;
+    .featured {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--r-lg); overflow: hidden;
+      transition: border-color 0.22s; margin-bottom: 18px;
     }
-    .featured-card:hover { border-color: var(--border-h); }
-    .featured-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--green-text);
-      background: rgba(74,222,128,0.08);
-      border: 1px solid rgba(74,222,128,0.2);
-      padding: 4px 12px; border-radius: 999px;
-    }
+    .featured:hover { border-color: var(--border-h); }
+    .featured-inner { display: flex; flex-wrap: wrap; }
+    .featured-img   { flex: 1 1 280px; min-height: 220px; object-fit: cover; width: 100%; }
+    .featured-body  { flex: 1 1 280px; padding: 28px 30px; display: flex; flex-direction: column; justify-content: center; }
 
-    /* ── WHY I BUILT IT ── */
-    .why-block {
-      background: rgba(48,220,128,0.04);
-      border: 1px solid rgba(48,220,128,0.12);
-      border-left: 3px solid var(--green-dim);
-      border-radius: 0 10px 10px 0;
-      padding: 14px 18px;
+    .f-badge {
+      display: inline-flex; align-items: center; gap: 6px; width: fit-content;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase;
+      color: var(--green-t); background: rgba(74,222,128,0.08);
+      border: 1px solid rgba(74,222,128,0.2); padding: 4px 12px;
+      border-radius: 999px; margin-bottom: 14px;
     }
+    .f-title { font-family:'Syne',sans-serif; font-size:22px; font-weight:700; letter-spacing:-0.02em; margin-bottom:10px; }
+    .f-desc  { color:var(--muted); font-size:14px; line-height:1.72; margin-bottom:14px; font-weight:300; }
+
+    .why {
+      background: rgba(48,220,128,0.04);
+      border: 1px solid rgba(48,220,128,0.11);
+      border-left: 3px solid var(--green-dim);
+      border-radius: 0 9px 9px 0;
+      padding: 13px 17px; margin-bottom: 20px;
+      font-size: 13px; color: var(--muted); line-height: 1.72;
+    }
+    .why strong { color: var(--green-t); font-weight: 500; }
 
     /* ── TECH TAGS ── */
-    .tech-tag {
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 20px; }
+    .tag {
       font-size: 12px; padding: 4px 12px; border-radius: 999px;
-      background: rgba(48,220,128,0.07);
-      border: 1px solid rgba(48,220,128,0.18);
-      color: var(--green-text); font-weight: 500;
-    }
-
-    /* ── SKILL CHIPS ── */
-    .skill-chip {
-      font-size: 13px; padding: 6px 14px; border-radius: 8px;
-      background: var(--bg-card2);
-      border: 1px solid var(--border);
-      color: var(--text);
+      background: var(--green-bg); border: 1px solid rgba(48,220,128,0.18);
+      color: var(--green-t); font-weight: 500;
     }
 
     /* ── PROJECT LINK BUTTONS ── */
-    .link-solid {
+    .plinks { display: flex; gap: 9px; flex-wrap: wrap; }
+    .pl-solid {
       display: inline-flex; align-items: center; gap: 6px;
       background: var(--green); color: #0d1117;
       font-size: 13px; font-weight: 600;
-      padding: 8px 18px; border-radius: 8px; text-decoration: none;
-      transition: background 0.2s;
+      padding: 8px 17px; border-radius: var(--r); transition: background 0.2s;
     }
-    .link-solid:hover { background: #22c55e; }
-    .link-ghost {
+    .pl-solid:hover { background: var(--green-dim); }
+    .pl-ghost {
       display: inline-flex; align-items: center; gap: 6px;
       background: transparent; color: var(--text);
-      font-size: 13px; font-weight: 400;
-      padding: 8px 18px; border-radius: 8px; text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 13px; padding: 8px 17px; border-radius: var(--r);
+      border: 1px solid rgba(255,255,255,0.11);
       transition: border-color 0.2s, background 0.2s;
     }
-    .link-ghost:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
-    .link-loom {
+    .pl-ghost:hover { border-color: rgba(255,255,255,0.26); background: rgba(255,255,255,0.04); }
+    .pl-loom {
       display: inline-flex; align-items: center; gap: 6px;
       background: transparent; color: #60a5fa;
-      font-size: 13px; font-weight: 400;
-      padding: 8px 18px; border-radius: 8px; text-decoration: none;
+      font-size: 13px; padding: 8px 17px; border-radius: var(--r);
       border: 1px solid rgba(96,165,250,0.25);
       transition: border-color 0.2s, background 0.2s;
     }
-    .link-loom:hover { border-color: rgba(96,165,250,0.5); background: rgba(96,165,250,0.05); }
+    .pl-loom:hover { border-color: rgba(96,165,250,0.5); background: rgba(96,165,250,0.05); }
 
-    /* ── OTHER WORK CARDS ── */
-    .other-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px; overflow: hidden;
-      text-decoration: none; display: block;
-      transition: border-color 0.22s, transform 0.22s;
+    /* ── OTHER WORK GRID ── */
+    .other-label { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin:42px 0 13px; }
+    .other-grid  { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:11px; }
+    .other-card  {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 18px 20px;
+      transition: border-color 0.2s, transform 0.2s;
     }
     .other-card:hover { border-color: var(--border-h); transform: translateY(-3px); }
+    .other-title { font-size:14px; font-weight:500; color:var(--text); margin-bottom:5px; }
+    .other-desc  { font-size:12px; color:var(--muted); line-height:1.55; margin-bottom:11px; }
+    .other-note  { font-size:12px; color:var(--muted); font-style:italic; margin-top:9px; }
 
-    /* ── SOCIAL LINKS ── */
-    .social-link {
-      display: inline-flex; align-items: center; gap: 7px;
-      font-size: 13px; color: var(--muted); text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 8px 16px; border-radius: 8px;
+    /* ── ARCHITECTURE ── */
+    .arch-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:14px; margin-bottom:24px; }
+    .arch-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--r-lg); overflow: hidden;
+      transition: border-color 0.22s, transform 0.22s;
+    }
+    .arch-card:hover { border-color: var(--border-h); transform: translateY(-3px); }
+    .arch-img  { width:100%; height:170px; object-fit:cover; }
+    .arch-body { padding:18px 20px; }
+    .arch-name { font-family:'Syne',sans-serif; font-size:16px; font-weight:600; margin-bottom:4px; }
+    .arch-sub  { font-size:13px; color:var(--muted); }
+
+    /* ── ABOUT ── */
+    .about-grid  { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:48px; }
+    .about-text p { color:var(--muted); font-size:15px; line-height:1.78; margin-bottom:15px; font-weight:300; }
+    .about-text p:last-child { margin-bottom:0; }
+    .about-text strong { color:var(--text); font-weight:500; }
+    .about-text .hi   { color:var(--green-t); font-weight:500; }
+
+    .skills-label { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:11px; }
+    .skills-chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px; }
+    .chip {
+      font-size:13px; padding:6px 14px; border-radius:8px;
+      background: var(--bg-card2); border:1px solid var(--border); color:var(--text);
+    }
+    .socials { display:flex; flex-wrap:wrap; gap:8px; }
+    .social {
+      display:inline-flex; align-items:center; gap:7px;
+      font-size:13px; color:var(--muted);
+      border:1px solid rgba(255,255,255,0.09);
+      padding:7px 14px; border-radius:8px;
       transition: color 0.2s, border-color 0.2s, background 0.2s;
     }
-    .social-link:hover { color: var(--text); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
+    .social:hover { color:var(--text); border-color:rgba(255,255,255,0.22); background:rgba(255,255,255,0.04); }
+
+    /* ── FOOTER ── */
+    footer { border-top:1px solid var(--border); padding:26px 24px; text-align:center; }
+    footer p { font-size:13px; color:var(--muted); }
 
     /* ── MODAL ── */
     .modal-overlay {
-      display: none; position: fixed; inset: 0; z-index: 200;
-      background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
-      align-items: center; justify-content: center; padding: 24px;
+      display:none; position:fixed; inset:0; z-index:200;
+      background:rgba(0,0,0,0.76); backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+      align-items:center; justify-content:center; padding:20px;
     }
-    .modal-overlay.open { display: flex; }
+    .modal-overlay.open { display:flex; }
     .modal-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 20px; padding: 36px; width: 100%; max-width: 460px;
+      background:var(--bg-card); border:1px solid var(--border);
+      border-radius:var(--r-lg); padding:32px; width:100%; max-width:450px;
     }
+    .modal-head { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:5px; }
+    .modal-head h3 { font-family:'Syne',sans-serif; font-size:21px; font-weight:700; }
+    .modal-close { background:none; border:none; color:var(--muted); font-size:23px; cursor:pointer; line-height:1; }
+    .modal-close:hover { color:var(--text); }
+    .modal-sub { font-size:13px; color:var(--muted); margin-bottom:22px; }
+    .modal-field { margin-bottom:13px; }
+    .modal-field label { display:block; font-size:12px; color:var(--muted); margin-bottom:5px; }
     .modal-input {
-      width: 100%; background: var(--bg-base);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px; color: var(--text);
-      font-family: 'DM Sans', sans-serif; font-size: 14px;
-      padding: 11px 14px; outline: none;
-      transition: border-color 0.2s;
+      width:100%; background:var(--bg); border:1px solid rgba(255,255,255,0.1);
+      border-radius:8px; color:var(--text);
+      font-family:'DM Sans',sans-serif; font-size:14px;
+      padding:10px 13px; outline:none; transition:border-color 0.2s;
     }
-    .modal-input:focus { border-color: rgba(74,222,128,0.4); }
-    textarea.modal-input { min-height: 96px; resize: vertical; }
+    .modal-input:focus { border-color:rgba(74,222,128,0.4); }
+    textarea.modal-input { min-height:90px; resize:vertical; }
 
     /* ── ANIMATIONS ── */
-    .fade-up {
-      opacity: 0; transform: translateY(32px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-    .hero-stagger { opacity: 0; transform: translateY(16px); }
-    .hero-stagger.show { opacity: 1; transform: translateY(0); transition: opacity 0.55s ease, transform 0.55s cubic-bezier(.2,.8,.2,1); }
+    .fade-up { opacity:0; transform:translateY(28px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+    .hs { opacity:0; transform:translateY(15px); }
+    .hs.show { opacity:1; transform:translateY(0); transition:opacity 0.55s ease,transform 0.55s cubic-bezier(.2,.8,.2,1); }
 
-    /* ── DIVIDER ── */
-    .section-divider { border: none; border-top: 1px solid var(--border); }
-
-    /* ── SCROLLBAR ── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg-base); }
-    ::-webkit-scrollbar-thumb { background: rgba(48,220,128,0.2); border-radius: 3px; }
-
+    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .desktop-nav { display: none; }
-      .hamburger-btn { display: block; }
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      section { padding: 68px 0; }
+      .featured-body { padding: 22px; }
+      .f-title { font-size: 19px; }
+      .hero { padding: 100px 24px 60px; }
     }
-    @media (min-width: 769px) {
-      .hamburger-btn { display: none; }
-      .mobile-menu { display: none !important; }
+    @media (max-width: 480px) {
+      .other-grid { grid-template-columns: 1fr 1fr; }
+      .hero h1 { font-size: 36px; }
+      .arch-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── NAV ── -->
+<!-- NAV -->
 <header>
-  <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:16px 24px;">
-    <span class="font-syne" style="font-size:20px;font-weight:800;color:var(--text);letter-spacing:-0.02em;">Minty</span>
-    <nav class="desktop-nav" style="display:flex;align-items:center;gap:32px;">
-      <a href="#webdev" style="color:var(--muted);text-decoration:none;font-size:14px;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Web Dev</a>
-      <a href="#architecture" style="color:var(--muted);text-decoration:none;font-size:14px;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Architecture</a>
-      <a href="#about" style="color:var(--muted);text-decoration:none;font-size:14px;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">About</a>
+  <div class="nav-inner">
+    <span class="nav-logo syne">Minty</span>
+    <nav class="nav-links">
+      <a href="#webdev">Web Dev</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#about">About</a>
       <button class="btn-green" id="nav-hire">Hire Me</button>
     </nav>
-    <button class="hamburger-btn" id="hamburger" style="background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;">&#9776;</button>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
   </div>
-  <div id="mobile-menu" style="display:none;flex-direction:column;gap:16px;padding:16px 24px 20px;border-top:1px solid var(--border);">
-    <a href="#webdev" style="color:var(--muted);text-decoration:none;font-size:15px;">Web Dev</a>
-    <a href="#architecture" style="color:var(--muted);text-decoration:none;font-size:15px;">Architecture</a>
-    <a href="#about" style="color:var(--muted);text-decoration:none;font-size:15px;">About</a>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="#webdev">Web Dev</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#about">About</a>
     <button class="btn-green" id="mobile-hire" style="width:fit-content;">Hire Me</button>
   </div>
 </header>
 
-<!-- ── HERO ── -->
-<section style="position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:130px 24px 80px;max-width:860px;margin:0 auto;overflow:hidden;">
-  <div class="hero-grid-bg"></div>
+<!-- HERO -->
+<div style="position:relative;overflow:hidden;">
+  <div class="hero-grid"></div>
   <div class="hero-glow"></div>
-
-  <div style="position:relative;z-index:1;">
-    <div style="margin-bottom:24px;" class="hero-stagger">
-      <span class="avail-badge"><span class="avail-dot"></span>Available for remote work</span>
-    </div>
-
-    <h1 class="font-syne hero-stagger" style="font-size:clamp(42px,7vw,76px);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:22px;">
-      Building <span style="color:var(--green-text);">Digital</span> &amp;<br>Physical Spaces
-    </h1>
-
-    <p class="hero-stagger" style="font-size:18px;color:var(--muted);max-width:500px;line-height:1.65;margin-bottom:14px;font-weight:300;">
-      Full-stack web developer and architect based in Lagos. I build complete web systems — from the database up to the interface.
-    </p>
-
-    <p class="hero-stagger" style="font-size:13px;color:var(--muted);letter-spacing:0.04em;margin-bottom:36px;opacity:0.7;">
-      PHP &nbsp;·&nbsp; MySQL &nbsp;·&nbsp; JavaScript &nbsp;·&nbsp; Lagos, Nigeria
-    </p>
-
-    <div class="hero-stagger" style="display:flex;gap:12px;flex-wrap:wrap;">
-      <button class="btn-green" id="hero-hire">Hire Me</button>
-      <a href="#webdev" class="btn-outline">View My Work</a>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider" style="max-width:1100px;margin:0 auto;" />
-
-<!-- ── WEB DEV ── -->
-<section id="webdev" style="max-width:900px;margin:0 auto;padding:96px 24px;">
-  <p class="section-eyebrow fade-up">Web Development</p>
-  <h2 class="font-syne fade-up" style="font-size:clamp(28px,4vw,40px);font-weight:700;letter-spacing:-0.02em;margin-bottom:8px;">Projects</h2>
-  <p class="fade-up" style="color:var(--muted);font-size:15px;margin-bottom:52px;font-weight:300;">Full-stack systems built with PHP, MySQL, JavaScript, and CSS.</p>
-
-  <!-- FEATURED: THE SPOT -->
-  <div class="featured-card fade-up" style="margin-bottom:20px;">
-    <div style="display:flex;flex-wrap:wrap;">
-      <div style="flex:1;min-width:280px;">
-        <img src="img/spot.png" alt="The Spot Restaurant OS dashboard" style="width:100%;height:100%;min-height:220px;object-fit:cover;display:block;" />
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hs" style="margin-bottom:22px;">
+        <span class="avail"><span class="avail-dot"></span>Available for work</span>
       </div>
-      <div style="flex:1;min-width:280px;padding:32px;display:flex;flex-direction:column;justify-content:center;">
-        <span class="featured-badge" style="margin-bottom:16px;width:fit-content;">★ Featured Project</span>
-        <h3 class="font-syne" style="font-size:24px;font-weight:700;letter-spacing:-0.02em;margin-bottom:12px;">The Spot — Restaurant OS</h3>
-        <p style="color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:14px;font-weight:300;">
-          A full restaurant management system with a public ordering menu, live kitchen dashboard, and admin panel. Built entirely solo with vanilla PHP, SQLite, JavaScript, and Tailwind CSS.
-        </p>
-        <div class="why-block" style="margin-bottom:20px;">
-          <p style="font-size:13px;color:var(--muted);line-height:1.7;">
-            <span style="color:var(--green-text);font-weight:500;">Why I built it:</span> Most restaurant POS tools are either too expensive for small local restaurants or don't fit the way Nigerian food businesses actually operate — split billing, table-based ordering, cash-first workflows. I built this from scratch to solve that gap: live orders, kitchen queues, inventory, staff roles, and billing — entirely in the browser, no third-party dependencies.
-          </p>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px;">
-          <span class="tech-tag">PHP</span>
-          <span class="tech-tag">SQLite</span>
-          <span class="tech-tag">JavaScript</span>
-          <span class="tech-tag">Tailwind CSS</span>
-          <span class="tech-tag">Custom MVC</span>
-          <span class="tech-tag">Role-based auth</span>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <a href="https://restaurant-ordering-system-lstg.onrender.com" target="_blank" class="link-solid">Live Demo ↗</a>
-          <a href="https://github.com/minty-9/restaurant-ordering-system" target="_blank" class="link-ghost"><i class="fa-brands fa-github"></i> GitHub</a>
-          <a href="YOUR_LOOM_LINK_HERE" target="_blank" class="link-loom"><i class="fa-solid fa-circle-play"></i> Walkthrough</a>
-        </div>
+      <h1 class="hs">Building <em>Digital</em> &amp;<br>Physical Spaces</h1>
+      <p class="hero-sub hs">Full-stack web developer and architect based in Lagos. I build complete web systems — from the database up to the interface.</p>
+      <p class="hero-meta hs">PHP &nbsp;·&nbsp; MySQL &nbsp;·&nbsp; JavaScript &nbsp;·&nbsp; Lagos, Nigeria</p>
+      <div class="hero-ctas hs">
+        <button class="btn-green" id="hero-hire">Hire Me</button>
+        <a href="#webdev" class="btn-outline">View My Work</a>
       </div>
-    </div>
-  </div>
-
-  <!-- OTHER WORK -->
-  <p style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin:44px 0 14px;">Other work</p>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;">
-
-    <a href="https://minty-9.github.io/jovies-clothiers/" target="_blank" class="other-card">
-      <img src="img/jov.jpg" alt="Jovies Clothiers" style="width:100%;height:140px;object-fit:cover;display:block;" />
-      <div style="padding:16px;">
-        <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;">Jovies Clothiers</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.5;">Bespoke fashion website for a clothing brand.</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          <span class="tech-tag" style="font-size:11px;padding:3px 10px;">HTML</span>
-          <span class="tech-tag" style="font-size:11px;padding:3px 10px;">CSS</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="https://minty-9.github.io/Sapril-cleaning/" target="_blank" class="other-card">
-      <img src="img/sapril.jpg" alt="Sapril Cleaning" style="width:100%;height:140px;object-fit:cover;display:block;" />
-      <div style="padding:16px;">
-        <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;">Sapril Cleaning</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.5;">Landing page for a professional cleaning business.</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          <span class="tech-tag" style="font-size:11px;padding:3px 10px;">HTML</span>
-          <span class="tech-tag" style="font-size:11px;padding:3px 10px;">CSS</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="https://minty-9.github.io/task-manager/index.html" target="_blank" class="other-card">
-      <img src="img/task.jpg" alt="Task Manager" style="width:100%;height:140px;object-fit:cover;display:block;" />
-      <div style="padding:16px;">
-        <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;">Task Manager App</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.5;">Organise and track daily tasks with priority and due dates.</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          <span class="tech-tag" style="font-size:11px;padding:3px 10px;">JavaScript</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="https://minty-9.github.io/expense-tracker/index.html" target="_blank" class="other-card">
-      <img src="img/expense.jpg" alt="Expense Tracker" style="width:100%;height:140px;object-fit:cover;display:block;" />
-      <div style="padding:16px;">
-        <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;">Expense Tracker</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.5;">Track income and expenses with visual summaries.</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          <span class="tech-tag" style="font-size:11px;padding:3px 10px;">JavaScript</span>
-        </div>
-      </div>
-    </a>
-
-  </div>
-  <p style="font-size:12px;color:var(--muted);font-style:italic;margin-top:10px;">More coming soon — currently building a multi-tenant booking system.</p>
-</section>
-
-<hr class="section-divider" style="max-width:1100px;margin:0 auto;" />
-
-<!-- ── ARCHITECTURE ── -->
-<section id="architecture" style="max-width:900px;margin:0 auto;padding:96px 24px;">
-  <p class="section-eyebrow fade-up">Architecture</p>
-  <h2 class="font-syne fade-up" style="font-size:clamp(28px,4vw,40px);font-weight:700;letter-spacing:-0.02em;margin-bottom:8px;">Design Work</h2>
-  <p class="fade-up" style="color:var(--muted);font-size:15px;margin-bottom:52px;font-weight:300;">Structural design meets aesthetic precision — residential and commercial projects.</p>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:28px;" class="fade-up">
-    <a href="architecture.html" class="card" style="text-decoration:none;display:block;overflow:hidden;">
-      <img src="img/resi.jpg" alt="Residential Villa" style="width:100%;height:180px;object-fit:cover;display:block;" />
-      <div style="padding:20px;">
-        <div class="font-syne" style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:5px;">Residential Villa</div>
-        <div style="font-size:13px;color:var(--muted);">Modern minimalist design emphasising natural light and flow.</div>
-      </div>
-    </a>
-    <a href="architecture.html" class="card" style="text-decoration:none;display:block;overflow:hidden;">
-      <img src="img/commer.jpg" alt="Commercial Hub" style="width:100%;height:180px;object-fit:cover;display:block;" />
-      <div style="padding:20px;">
-        <div class="font-syne" style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:5px;">Commercial Hub</div>
-        <div style="font-size:13px;color:var(--muted);">Functional space blending aesthetic appeal and structural efficiency.</div>
-      </div>
-    </a>
-  </div>
-
-  <a href="architecture.html" class="btn-outline fade-up" style="width:fit-content;">View All Architecture Works →</a>
-</section>
-
-<hr class="section-divider" style="max-width:1100px;margin:0 auto;" />
-
-<!-- ── ABOUT ── -->
-<section id="about" style="max-width:900px;margin:0 auto;padding:96px 24px;">
-  <p class="section-eyebrow fade-up">About</p>
-  <h2 class="font-syne fade-up" style="font-size:clamp(28px,4vw,40px);font-weight:700;letter-spacing:-0.02em;margin-bottom:40px;">About Minty</h2>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:52px;">
-    <div class="fade-up">
-      <p style="color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:16px;font-weight:300;">
-        I'm <strong style="color:var(--text);font-weight:500;">Simeon (Minty)</strong> — a full-stack web developer and architect based in Lagos, Nigeria. I build web systems that solve real operational problems, from the database design up to the user interface.
-      </p>
-      <p style="color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:16px;font-weight:300;">
-        My most complete project is <strong style="color:var(--text);font-weight:500;">The Spot</strong> — a full restaurant operating system built entirely solo. It handles live table orders, kitchen dashboards, inventory, staff roles, and billing, with no framework and no team.
-      </p>
-      <p style="color:var(--muted);font-size:15px;line-height:1.8;font-weight:300;">
-        My background in architecture gives me an edge most developers don't have — I think in systems, structure, and user flow before I write a single line of code. Currently <strong style="color:var(--green-text);font-weight:500;">open to remote developer roles</strong>.
-      </p>
-    </div>
-
-    <div class="fade-up">
-      <p style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Tech stack</p>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;">
-        <span class="skill-chip">PHP</span>
-        <span class="skill-chip">MySQL</span>
-        <span class="skill-chip">SQLite</span>
-        <span class="skill-chip">JavaScript</span>
-        <span class="skill-chip">HTML5</span>
-        <span class="skill-chip">CSS3</span>
-        <span class="skill-chip">Tailwind CSS</span>
-        <span class="skill-chip">REST APIs</span>
-        <span class="skill-chip">Custom MVC</span>
-        <span class="skill-chip">Git & GitHub</span>
-      </div>
-      <p style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Find me</p>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;">
-        <a href="https://github.com/minty-9" target="_blank" class="social-link"><i class="fa-brands fa-github"></i> GitHub</a>
-        <a href="https://www.linkedin.com/in/david-simeon-8b136a156" target="_blank" class="social-link"><i class="fa-brands fa-linkedin" style="color:#60a5fa;"></i> LinkedIn</a>
-        <a href="https://wa.link/c4ub0x" target="_blank" class="social-link"><i class="fa-brands fa-whatsapp" style="color:#4ade80;"></i> WhatsApp</a>
-        <a href="https://x.com/onlyoneminty?s=21" target="_blank" class="social-link"><i class="fa-brands fa-x-twitter"></i> X</a>
-        <a href="https://www.instagram.com/_mintyyy.__" target="_blank" class="social-link"><i class="fa-brands fa-instagram" style="color:#f472b6;"></i> Instagram</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── FOOTER ── -->
-<footer style="border-top:1px solid var(--border);padding:28px 24px;text-align:center;">
-  <p style="font-size:13px;color:var(--muted);">© <span id="year"></span> Minty. All rights reserved.</p>
-</footer>
-
-<!-- ── HIRE ME MODAL ── -->
-<div class="modal-overlay" id="modal">
-  <div class="modal-box">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-      <h3 class="font-syne" style="font-size:22px;font-weight:700;">Get in Touch</h3>
-      <button id="close-modal" style="background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;line-height:1;padding:0;">&times;</button>
-    </div>
-    <p style="font-size:14px;color:var(--muted);margin-bottom:24px;">I'll get back to you within 24 hours.</p>
-    <div style="display:flex;flex-direction:column;gap:14px;">
-      <input type="text"  id="m-name"    class="modal-input" placeholder="Your name" />
-      <input type="email" id="m-email"   class="modal-input" placeholder="your@email.com" />
-      <textarea           id="m-message" class="modal-input" placeholder="Tell me about your project..."></textarea>
-      <button class="btn-green" style="width:100%;justify-content:center;" onclick="sendMail()">Send Message</button>
     </div>
   </div>
 </div>
 
+<div class="wide"><hr class="div" /></div>
+
+<!-- WEB DEV -->
+<section id="webdev">
+  <div class="container">
+    <p class="eyebrow fade-up">Web Development</p>
+    <h2 class="section-title syne fade-up">Projects</h2>
+    <p class="section-sub fade-up">Full-stack systems built with PHP, MySQL, JavaScript, and CSS.</p>
+
+    <!-- FEATURED -->
+    <div class="featured fade-up">
+      <div class="featured-inner">
+        <img src="img/spot.png" alt="The Spot Restaurant OS" class="featured-img" />
+        <div class="featured-body">
+          <span class="f-badge">★ Featured Project</span>
+          <h3 class="f-title">The Spot — Restaurant OS</h3>
+          <p class="f-desc">A full restaurant management system with a public ordering menu, live kitchen dashboard, and admin panel. Built entirely solo with vanilla PHP, SQLite, JavaScript, and Tailwind CSS.</p>
+          <div class="why">
+            <strong>Why I built it:</strong> Most restaurant POS tools are too expensive for small local restaurants or don't fit Nigerian business workflows — split billing, table-based ordering, cash-first operations. I built this from scratch to solve that gap: live orders, kitchen queues, inventory, staff roles, and billing entirely in the browser, no third-party dependencies.
+          </div>
+          <div class="tags">
+            <span class="tag">PHP</span>
+            <span class="tag">SQLite</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Tailwind CSS</span>
+            <span class="tag">Custom MVC</span>
+            <span class="tag">Role-based auth</span>
+          </div>
+          <div class="plinks">
+            <a href="https://restaurant-ordering-system-lstg.onrender.com" target="_blank" class="pl-solid">Live Demo ↗</a>
+            <a href="https://github.com/minty-9/restaurant-ordering-system" target="_blank" class="pl-ghost"><i class="fa-brands fa-github"></i> GitHub</a>
+            <a href="YOUR_LOOM_LINK_HERE" target="_blank" class="pl-loom"><i class="fa-solid fa-circle-play"></i> Walkthrough</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OTHER WORK -->
+    <p class="other-label">Other work</p>
+    <div class="other-grid">
+      <a href="https://minty-9.github.io/jovies-clothiers/" target="_blank" class="other-card fade-up">
+        <div class="other-title">Jovies Clothiers</div>
+        <div class="other-desc">Bespoke fashion website for a clothing brand.</div>
+        <div class="tags" style="margin-bottom:0;"><span class="tag">HTML</span><span class="tag">CSS</span></div>
+      </a>
+      <a href="https://minty-9.github.io/Sapril-cleaning/" target="_blank" class="other-card fade-up">
+        <div class="other-title">Sapril Cleaning</div>
+        <div class="other-desc">Landing page for a professional cleaning business.</div>
+        <div class="tags" style="margin-bottom:0;"><span class="tag">HTML</span><span class="tag">CSS</span></div>
+      </a>
+      <a href="https://minty-9.github.io/task-manager/index.html" target="_blank" class="other-card fade-up">
+        <div class="other-title">Task Manager App</div>
+        <div class="other-desc">Organise and track daily tasks with priority and due dates.</div>
+        <div class="tags" style="margin-bottom:0;"><span class="tag">JavaScript</span></div>
+      </a>
+      <a href="https://minty-9.github.io/expense-tracker/index.html" target="_blank" class="other-card fade-up">
+        <div class="other-title">Expense Tracker</div>
+        <div class="other-desc">Track income and expenses with visual summaries.</div>
+        <div class="tags" style="margin-bottom:0;"><span class="tag">JavaScript</span></div>
+      </a>
+    </div>
+    <p class="other-note fade-up">More coming soon — currently building a multi-tenant booking system in PHP &amp; MySQL.</p>
+  </div>
+</section>
+
+<div class="wide"><hr class="div" /></div>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="container">
+    <p class="eyebrow fade-up">Architecture</p>
+    <h2 class="section-title syne fade-up">Design Work</h2>
+    <p class="section-sub fade-up">Structural design meets aesthetic precision — residential and commercial projects.</p>
+    <div class="arch-grid fade-up">
+      <a href="architecture.html" class="arch-card">
+        <img src="img/resi.jpg" alt="Residential Villa" class="arch-img" />
+        <div class="arch-body">
+          <div class="arch-name syne">Residential Villa</div>
+          <div class="arch-sub">Modern minimalist design emphasising natural light and flow.</div>
+        </div>
+      </a>
+      <a href="architecture.html" class="arch-card">
+        <img src="img/commer.jpg" alt="Commercial Hub" class="arch-img" />
+        <div class="arch-body">
+          <div class="arch-name syne">Commercial Hub</div>
+          <div class="arch-sub">Functional space blending aesthetic appeal and structural efficiency.</div>
+        </div>
+      </a>
+    </div>
+    <a href="architecture.html" class="btn-outline fade-up">View All Architecture Works →</a>
+  </div>
+</section>
+
+<div class="wide"><hr class="div" /></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <p class="eyebrow fade-up">About</p>
+    <h2 class="section-title syne fade-up">About Minty</h2>
+    <div style="margin-bottom:44px;"></div>
+    <div class="about-grid">
+      <div class="about-text fade-up">
+        <p>I'm <strong>Simeon (Minty)</strong> — a full-stack web developer and architect based in Lagos, Nigeria. I build web systems that solve real operational problems, from database design up to the user interface.</p>
+        <p>My most complete project is <strong>The Spot</strong> — a full restaurant operating system built entirely solo. It handles live table orders, kitchen dashboards, inventory, staff roles, and billing, with no framework and no team.</p>
+        <p>My background in architecture gives me an edge most developers don't have — I think in systems, structure, and user flow before writing a single line of code. I'm currently <span class="hi">open to remote roles and freelance projects</span>.</p>
+      </div>
+      <div class="fade-up">
+        <p class="skills-label">Tech stack</p>
+        <div class="skills-chips">
+          <span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">SQLite</span>
+          <span class="chip">JavaScript</span><span class="chip">HTML5</span><span class="chip">CSS3</span>
+          <span class="chip">Tailwind CSS</span><span class="chip">REST APIs</span>
+          <span class="chip">Custom MVC</span><span class="chip">Git &amp; GitHub</span>
+        </div>
+        <p class="skills-label">Find me</p>
+        <div class="socials">
+          <a href="https://github.com/minty-9" target="_blank" class="social"><i class="fa-brands fa-github"></i> GitHub</a>
+          <a href="https://www.linkedin.com/in/david-simeon-8b136a156" target="_blank" class="social"><i class="fa-brands fa-linkedin" style="color:#60a5fa;"></i> LinkedIn</a>
+          <a href="https://wa.link/c4ub0x" target="_blank" class="social"><i class="fa-brands fa-whatsapp" style="color:#4ade80;"></i> WhatsApp</a>
+          <a href="https://x.com/onlyoneminty?s=21" target="_blank" class="social"><i class="fa-brands fa-x-twitter"></i> X</a>
+          <a href="https://www.instagram.com/_mintyyy.__" target="_blank" class="social"><i class="fa-brands fa-instagram" style="color:#f472b6;"></i> Instagram</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© <span id="yr"></span> Minty. All rights reserved.</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Get in Touch</h3>
+      <button class="modal-close" id="close-modal">&times;</button>
+    </div>
+    <p class="modal-sub">I'll get back to you within 24 hours.</p>
+    <div class="modal-field"><label>Name</label><input type="text" id="m-name" class="modal-input" placeholder="Your name" /></div>
+    <div class="modal-field"><label>Email</label><input type="email" id="m-email" class="modal-input" placeholder="your@email.com" /></div>
+    <div class="modal-field"><label>Message</label><textarea id="m-msg" class="modal-input" placeholder="Tell me about your project..."></textarea></div>
+    <button class="btn-green" style="width:100%;justify-content:center;margin-top:4px;" onclick="sendMail()">Send Message</button>
+  </div>
+</div>
+
 <script>
-  // Year
-  document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('yr').textContent = new Date().getFullYear();
 
   // Hamburger
-  document.getElementById('hamburger').addEventListener('click', () => {
-    const m = document.getElementById('mobile-menu');
-    m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
-    if (m.style.display === 'flex') m.style.flexDirection = 'column';
-  });
-  document.querySelectorAll('#mobile-menu a').forEach(a => {
-    a.addEventListener('click', () => { document.getElementById('mobile-menu').style.display = 'none'; });
-  });
+  const ham = document.getElementById('hamburger');
+  const mnav = document.getElementById('mobile-nav');
+  ham.addEventListener('click', () => mnav.classList.toggle('open'));
+  mnav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mnav.classList.remove('open')));
 
   // Modal
   const modal = document.getElementById('modal');
-  const openModal = () => modal.classList.add('open');
-  const closeModal = () => modal.classList.remove('open');
-  ['nav-hire','hero-hire','mobile-hire'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('click', openModal);
-  });
-  document.getElementById('close-modal').addEventListener('click', closeModal);
-  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  const open  = () => modal.classList.add('open');
+  const close = () => modal.classList.remove('open');
+  ['nav-hire','hero-hire','mobile-hire'].forEach(id => { const el=document.getElementById(id); if(el) el.addEventListener('click', open); });
+  document.getElementById('close-modal').addEventListener('click', close);
+  modal.addEventListener('click', e => { if(e.target===modal) close(); });
 
   // Send mail
   function sendMail() {
-    const name    = document.getElementById('m-name').value.trim();
-    const email   = document.getElementById('m-email').value.trim();
-    const message = document.getElementById('m-message').value.trim();
-    if (!name || !email || !message) { alert('Please fill in all fields.'); return; }
-    window.location.href = `mailto:simeondavid99@gmail.com?subject=Project Inquiry from ${encodeURIComponent(name)}&body=${encodeURIComponent(message + '\n\nReply to: ' + email)}`;
-    closeModal();
+    const n = document.getElementById('m-name').value.trim();
+    const e = document.getElementById('m-email').value.trim();
+    const m = document.getElementById('m-msg').value.trim();
+    if (!n||!e||!m) { alert('Please fill in all fields.'); return; }
+    window.location.href = `mailto:simeondavid99@gmail.com?subject=Project Inquiry from ${encodeURIComponent(n)}&body=${encodeURIComponent(m+'\n\nReply to: '+e)}`;
+    close();
   }
 
   // Hero stagger
   window.addEventListener('load', () => {
-    document.querySelectorAll('.hero-stagger').forEach((el, i) => {
-      setTimeout(() => el.classList.add('show'), i * 110);
-    });
+    document.querySelectorAll('.hs').forEach((el,i) => setTimeout(() => el.classList.add('show'), i*110));
   });
 
   // Scroll fade-up
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
 </script>
 </body>
 </html>
