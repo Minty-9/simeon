@@ -4,31 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Minty — Web Developer & Architect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #0b0c0e;
-      --bg2: #111316;
-      --bg3: #18191d;
-      --border: rgba(255,255,255,0.07);
-      --border-hover: rgba(255,255,255,0.14);
-      --text: #f0ede8;
-      --muted: #7a7872;
-      --accent: #b8f0a0;
-      --accent2: #a0d4f0;
-      --tag-bg: rgba(255,255,255,0.06);
-      --radius: 14px;
-      --radius-sm: 8px;
+      --bg-base:    #0d1117;
+      --bg-card:    #161b22;
+      --bg-card2:   #1c2330;
+      --border:     rgba(48,220,128,0.10);
+      --border-h:   rgba(48,220,128,0.25);
+      --green:      #30dc80;
+      --green-dim:  #22c55e;
+      --green-pale: rgba(48,220,128,0.08);
+      --green-text: #4ade80;
+      --muted:      #8b949e;
+      --text:       #e6edf3;
     }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
-      background: var(--bg);
+      background: var(--bg-base);
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
       font-size: 16px;
@@ -36,420 +35,436 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* ── TYPOGRAPHY ── */
+    .font-syne { font-family: 'Syne', sans-serif; }
+
+    /* ── NOISE TEXTURE overlay for depth ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+
     /* ── NAV ── */
-    nav {
+    header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 40px;
-      background: rgba(11,12,14,0.85);
-      backdrop-filter: blur(12px);
+      background: rgba(13,17,23,0.88);
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
-    .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800; font-size: 20px;
-      color: var(--text); text-decoration: none;
-      letter-spacing: -0.02em;
-    }
-    .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
-    .nav-links a {
-      color: var(--muted); text-decoration: none; font-size: 14px;
-      font-weight: 400; transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-cta {
-      background: var(--accent); color: #0b0c0e !important;
-      padding: 8px 20px; border-radius: 100px;
-      font-weight: 500 !important; font-size: 14px !important;
-      transition: opacity 0.2s !important; cursor: pointer;
-    }
-    .nav-cta:hover { opacity: 0.85 !important; color: #0b0c0e !important; }
-    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--text); font-size: 22px; }
-    .mobile-menu {
-      display: none; position: fixed; top: 65px; left: 0; right: 0; z-index: 99;
-      background: var(--bg2); border-bottom: 1px solid var(--border);
-      padding: 20px 40px; flex-direction: column; gap: 16px;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a { color: var(--muted); text-decoration: none; font-size: 15px; }
-    .avail-badge {
-      display: inline-flex; align-items: center; gap: 7px;
-      font-size: 12px; color: var(--accent); font-weight: 500;
-      background: rgba(184,240,160,0.08); border: 1px solid rgba(184,240,160,0.2);
-      padding: 5px 13px; border-radius: 100px;
-    }
-    .avail-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
     /* ── HERO ── */
-    .hero {
-      min-height: 100vh; display: flex; flex-direction: column;
-      justify-content: center; padding: 120px 40px 80px;
-      max-width: 900px; margin: 0 auto;
+    .hero-grid-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(48,220,128,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(48,220,128,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
     }
-    .hero-badge { margin-bottom: 28px; }
-    .hero h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(44px, 7vw, 80px);
-      font-weight: 800; line-height: 1.06;
-      letter-spacing: -0.03em; margin-bottom: 24px;
+    .hero-glow {
+      position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 400px; pointer-events: none;
+      background: radial-gradient(ellipse at center, rgba(48,220,128,0.12) 0%, transparent 70%);
     }
-    .hero h1 em { font-style: normal; color: var(--accent); }
-    .hero-sub {
-      font-size: 18px; color: var(--muted); max-width: 520px;
-      line-height: 1.6; margin-bottom: 36px; font-weight: 300;
-    }
-    .hero-meta { font-size: 13px; color: var(--muted); margin-bottom: 40px; letter-spacing: 0.04em; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--accent); color: #0b0c0e;
-      padding: 13px 28px; border-radius: 100px;
-      font-weight: 500; font-size: 15px; text-decoration: none;
-      border: none; cursor: pointer; transition: opacity 0.2s;
-    }
-    .btn-primary:hover { opacity: 0.85; }
-    .btn-ghost {
-      background: transparent; color: var(--text);
-      padding: 13px 28px; border-radius: 100px;
-      font-weight: 400; font-size: 15px; text-decoration: none;
-      border: 1px solid var(--border-hover); transition: border-color 0.2s, background 0.2s;
-    }
-    .btn-ghost:hover { background: var(--bg3); border-color: rgba(255,255,255,0.2); }
 
-    /* ── SECTIONS ── */
-    section { padding: 100px 40px; max-width: 900px; margin: 0 auto; }
-    .section-label {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--muted);
-      margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+    /* ── AVAILABLE BADGE ── */
+    .avail-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; color: var(--green-text); font-weight: 500;
+      background: rgba(74,222,128,0.08);
+      border: 1px solid rgba(74,222,128,0.22);
+      padding: 5px 14px; border-radius: 999px;
+      letter-spacing: 0.03em;
     }
-    .section-label::after { content:''; flex:1; height:1px; background: var(--border); }
-    .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(28px, 4vw, 40px);
-      font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;
+    .avail-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green-text);
+      animation: pulse 2.2s ease-in-out infinite;
     }
-    .section-sub { font-size: 15px; color: var(--muted); margin-bottom: 56px; font-weight: 300; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.45;transform:scale(0.85)} }
 
-    /* ── FEATURED PROJECT ── */
-    .featured-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: border-color 0.25s;
-      margin-bottom: 20px;
-    }
-    .featured-card:hover { border-color: var(--border-hover); }
-    .featured-img {
-      width: 100%; height: 260px; object-fit: cover;
-      display: block; border-bottom: 1px solid var(--border);
-      background: var(--bg3);
-    }
-    .featured-body { padding: 32px; }
-    .featured-pill {
-      display: inline-block; font-size: 11px; font-weight: 500;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--accent); background: rgba(184,240,160,0.1);
-      border: 1px solid rgba(184,240,160,0.2);
-      padding: 4px 12px; border-radius: 100px; margin-bottom: 16px;
-    }
-    .featured-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 26px; font-weight: 700;
-      letter-spacing: -0.02em; margin-bottom: 12px;
-    }
-    .featured-desc { color: var(--muted); font-size: 15px; line-height: 1.7; margin-bottom: 16px; font-weight: 300; }
-    .featured-why {
-      background: var(--bg3); border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 16px 20px; margin-bottom: 24px;
-      font-size: 14px; color: var(--muted); line-height: 1.7;
-    }
-    .featured-why strong { color: var(--text); font-weight: 500; }
-    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
-    .tag {
-      font-size: 12px; padding: 5px 12px; border-radius: 100px;
-      background: var(--tag-bg); border: 1px solid var(--border);
-      color: var(--muted); font-weight: 400;
-    }
-    .project-links { display: flex; gap: 10px; flex-wrap: wrap; }
-    .link-btn {
+    /* ── BUTTONS ── */
+    .btn-green {
       display: inline-flex; align-items: center; gap: 7px;
-      font-size: 13px; font-weight: 500; padding: 9px 18px;
-      border-radius: 100px; text-decoration: none; transition: all 0.2s;
+      background: var(--green); color: #0d1117;
+      font-weight: 600; font-size: 14px;
+      padding: 11px 24px; border-radius: 8px;
+      border: none; cursor: pointer; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
     }
-    .link-btn-solid {
-      background: var(--accent); color: #0b0c0e;
+    .btn-green:hover { background: #22c55e; transform: translateY(-1px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: transparent; color: var(--green-text);
+      font-weight: 500; font-size: 14px;
+      padding: 11px 24px; border-radius: 8px;
+      border: 1px solid rgba(74,222,128,0.3); cursor: pointer; text-decoration: none;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
     }
-    .link-btn-solid:hover { opacity: 0.85; }
-    .link-btn-outline {
-      border: 1px solid var(--border-hover); color: var(--text);
-    }
-    .link-btn-outline:hover { background: var(--bg3); border-color: rgba(255,255,255,0.2); }
-    .link-btn-loom {
-      border: 1px solid rgba(160, 212, 240, 0.3); color: var(--accent2);
-    }
-    .link-btn-loom:hover { background: rgba(160,212,240,0.06); }
+    .btn-outline:hover { border-color: rgba(74,222,128,0.6); background: rgba(74,222,128,0.05); transform: translateY(-1px); }
 
-    /* ── OTHER PROJECTS ── */
-    .other-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px; margin-bottom: 8px;
+    /* ── SECTION LABEL ── */
+    .section-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--green-text);
+      margin-bottom: 12px;
     }
-    .other-card {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); padding: 18px 20px;
-      text-decoration: none; transition: border-color 0.2s;
+    .section-eyebrow::before {
+      content: ''; display: block;
+      width: 20px; height: 2px;
+      background: var(--green-dim); border-radius: 2px;
     }
-    .other-card:hover { border-color: var(--border-hover); }
-    .other-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
-    .other-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
-    .other-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-    .other-tag { font-size: 11px; color: var(--muted); background: var(--tag-bg); padding: 3px 9px; border-radius: 100px; }
-    .other-note { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 8px; }
 
-    /* ── ARCHITECTURE ── */
-    .arch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-    .arch-card {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: var(--radius); overflow: hidden; text-decoration: none;
-      transition: border-color 0.2s; display: block;
+    /* ── CARDS ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      transition: border-color 0.22s, transform 0.22s;
     }
-    .arch-card:hover { border-color: var(--border-hover); }
-    .arch-img {
-      width: 100%; height: 160px; object-fit: cover;
-      background: var(--bg3); display: block;
+    .card:hover { border-color: var(--border-h); transform: translateY(-3px); }
+
+    /* ── FEATURED CARD ── */
+    .featured-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px; overflow: hidden;
+      transition: border-color 0.22s;
     }
-    .arch-body { padding: 18px 20px; }
-    .arch-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-    .arch-sub { font-size: 13px; color: var(--muted); }
-    .arch-link {
+    .featured-card:hover { border-color: var(--border-h); }
+    .featured-badge {
       display: inline-flex; align-items: center; gap: 6px;
-      color: var(--muted); font-size: 14px; text-decoration: none;
-      border: 1px solid var(--border); padding: 9px 20px;
-      border-radius: 100px; transition: all 0.2s;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--green-text);
+      background: rgba(74,222,128,0.08);
+      border: 1px solid rgba(74,222,128,0.2);
+      padding: 4px 12px; border-radius: 999px;
     }
-    .arch-link:hover { border-color: var(--border-hover); color: var(--text); }
 
-    /* ── ABOUT ── */
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
-    .about-text p { color: var(--muted); font-size: 15px; line-height: 1.75; margin-bottom: 16px; font-weight: 300; }
-    .about-text p:last-child { margin-bottom: 0; }
-    .about-text strong { color: var(--text); font-weight: 500; }
-    .skills-block { }
-    .skills-label { font-size: 12px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
-    .skills-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    /* ── WHY I BUILT IT ── */
+    .why-block {
+      background: rgba(48,220,128,0.04);
+      border: 1px solid rgba(48,220,128,0.12);
+      border-left: 3px solid var(--green-dim);
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+    }
+
+    /* ── TECH TAGS ── */
+    .tech-tag {
+      font-size: 12px; padding: 4px 12px; border-radius: 999px;
+      background: rgba(48,220,128,0.07);
+      border: 1px solid rgba(48,220,128,0.18);
+      color: var(--green-text); font-weight: 500;
+    }
+
+    /* ── SKILL CHIPS ── */
     .skill-chip {
-      font-size: 13px; padding: 6px 14px; border-radius: 100px;
-      background: var(--tag-bg); border: 1px solid var(--border); color: var(--text);
+      font-size: 13px; padding: 6px 14px; border-radius: 8px;
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      color: var(--text);
     }
-    .socials { display: flex; gap: 12px; flex-wrap: wrap; }
-    .social-link {
+
+    /* ── PROJECT LINK BUTTONS ── */
+    .link-solid {
       display: inline-flex; align-items: center; gap: 6px;
+      background: var(--green); color: #0d1117;
+      font-size: 13px; font-weight: 600;
+      padding: 8px 18px; border-radius: 8px; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .link-solid:hover { background: #22c55e; }
+    .link-ghost {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: transparent; color: var(--text);
+      font-size: 13px; font-weight: 400;
+      padding: 8px 18px; border-radius: 8px; text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .link-ghost:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+    .link-loom {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: transparent; color: #60a5fa;
+      font-size: 13px; font-weight: 400;
+      padding: 8px 18px; border-radius: 8px; text-decoration: none;
+      border: 1px solid rgba(96,165,250,0.25);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .link-loom:hover { border-color: rgba(96,165,250,0.5); background: rgba(96,165,250,0.05); }
+
+    /* ── OTHER WORK CARDS ── */
+    .other-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden;
+      text-decoration: none; display: block;
+      transition: border-color 0.22s, transform 0.22s;
+    }
+    .other-card:hover { border-color: var(--border-h); transform: translateY(-3px); }
+
+    /* ── SOCIAL LINKS ── */
+    .social-link {
+      display: inline-flex; align-items: center; gap: 7px;
       font-size: 13px; color: var(--muted); text-decoration: none;
-      border: 1px solid var(--border); padding: 7px 14px;
-      border-radius: 100px; transition: all 0.2s;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 8px 16px; border-radius: 8px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
     }
-    .social-link:hover { color: var(--text); border-color: var(--border-hover); }
-
-    /* ── DIVIDER ── */
-    .divider { border: none; border-top: 1px solid var(--border); max-width: 900px; margin: 0 auto; }
-
-    /* ── FOOTER ── */
-    footer {
-      text-align: center; padding: 32px 40px;
-      font-size: 13px; color: var(--muted);
-      border-top: 1px solid var(--border);
-    }
+    .social-link:hover { color: var(--text); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
 
     /* ── MODAL ── */
     .modal-overlay {
       display: none; position: fixed; inset: 0; z-index: 200;
-      background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
+      background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
       align-items: center; justify-content: center; padding: 24px;
     }
     .modal-overlay.open { display: flex; }
-    .modal {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 36px; width: 100%; max-width: 480px;
+    .modal-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 36px; width: 100%; max-width: 460px;
     }
-    .modal-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
-    .modal h3 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; }
-    .modal-close { background: none; border: none; color: var(--muted); font-size: 22px; cursor: pointer; line-height: 1; }
-    .modal-close:hover { color: var(--text); }
-    .modal p { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-    .form-group input, .form-group textarea {
-      width: 100%; background: var(--bg3); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); color: var(--text);
-      font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 11px 14px;
-      outline: none; transition: border-color 0.2s; resize: vertical;
+    .modal-input {
+      width: 100%; background: var(--bg-base);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+      padding: 11px 14px; outline: none;
+      transition: border-color 0.2s;
     }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--border-hover); }
-    .form-group textarea { min-height: 100px; }
+    .modal-input:focus { border-color: rgba(74,222,128,0.4); }
+    textarea.modal-input { min-height: 96px; resize: vertical; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 700px) {
-      nav { padding: 16px 20px; }
-      .nav-links { display: none; }
-      .nav-hamburger { display: block; }
-      .hero { padding: 110px 20px 60px; }
-      section { padding: 70px 20px; }
-      .about-grid { grid-template-columns: 1fr; gap: 36px; }
-      .arch-grid { grid-template-columns: 1fr; }
-      .other-grid { grid-template-columns: 1fr 1fr; }
-      footer { padding: 24px 20px; }
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .hero-stagger { opacity: 0; transform: translateY(16px); }
+    .hero-stagger.show { opacity: 1; transform: translateY(0); transition: opacity 0.55s ease, transform 0.55s cubic-bezier(.2,.8,.2,1); }
+
+    /* ── DIVIDER ── */
+    .section-divider { border: none; border-top: 1px solid var(--border); }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: rgba(48,220,128,0.2); border-radius: 3px; }
+
+    @media (max-width: 768px) {
+      .desktop-nav { display: none; }
+      .hamburger-btn { display: block; }
+    }
+    @media (min-width: 769px) {
+      .hamburger-btn { display: none; }
+      .mobile-menu { display: none !important; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">Minty</a>
-  <ul class="nav-links">
-    <li><a href="#webdev">Web Dev</a></li>
-    <li><a href="#architecture">Architecture</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#" class="nav-cta" id="nav-hire-btn">Hire Me</a></li>
-  </ul>
-  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
-</nav>
-
-<div class="mobile-menu" id="mobile-menu">
-  <a href="#webdev">Web Dev</a>
-  <a href="#architecture">Architecture</a>
-  <a href="#about">About</a>
-  <a href="#" id="mobile-hire-btn">Hire Me</a>
-</div>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-badge">
-    <span class="avail-badge"><span class="avail-dot"></span>Available for work</span>
+<!-- ── NAV ── -->
+<header>
+  <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:16px 24px;">
+    <span class="font-syne" style="font-size:20px;font-weight:800;color:var(--text);letter-spacing:-0.02em;">Minty</span>
+    <nav class="desktop-nav" style="display:flex;align-items:center;gap:32px;">
+      <a href="#webdev" style="color:var(--muted);text-decoration:none;font-size:14px;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Web Dev</a>
+      <a href="#architecture" style="color:var(--muted);text-decoration:none;font-size:14px;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Architecture</a>
+      <a href="#about" style="color:var(--muted);text-decoration:none;font-size:14px;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">About</a>
+      <button class="btn-green" id="nav-hire">Hire Me</button>
+    </nav>
+    <button class="hamburger-btn" id="hamburger" style="background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;">&#9776;</button>
   </div>
-  <h1>Building <em>Digital</em> &amp; Physical Spaces</h1>
-  <p class="hero-sub">Full-stack web developer and architect based in Lagos. I build web systems that solve real operational problems — from the database up to the interface.</p>
-  <p class="hero-meta">Full-Stack Web Developer &nbsp;·&nbsp; Architect &nbsp;·&nbsp; Lagos, Nigeria</p>
-  <div class="hero-actions">
-    <button class="btn-primary" id="hero-hire-btn">Hire Me</button>
-    <a href="#webdev" class="btn-ghost">View My Work</a>
+  <div id="mobile-menu" style="display:none;flex-direction:column;gap:16px;padding:16px 24px 20px;border-top:1px solid var(--border);">
+    <a href="#webdev" style="color:var(--muted);text-decoration:none;font-size:15px;">Web Dev</a>
+    <a href="#architecture" style="color:var(--muted);text-decoration:none;font-size:15px;">Architecture</a>
+    <a href="#about" style="color:var(--muted);text-decoration:none;font-size:15px;">About</a>
+    <button class="btn-green" id="mobile-hire" style="width:fit-content;">Hire Me</button>
   </div>
-</div>
+</header>
 
-<hr class="divider" />
+<!-- ── HERO ── -->
+<section style="position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:130px 24px 80px;max-width:860px;margin:0 auto;overflow:hidden;">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
 
-<!-- WEB DEV -->
-<section id="webdev">
-  <p class="section-label">Web Development</p>
-  <h2 class="section-title">Projects</h2>
-  <p class="section-sub">Full-stack systems built with PHP, MySQL, JavaScript, and CSS.</p>
+  <div style="position:relative;z-index:1;">
+    <div style="margin-bottom:24px;" class="hero-stagger">
+      <span class="avail-badge"><span class="avail-dot"></span>Available for remote work</span>
+    </div>
 
-  <!-- FEATURED -->
-  <div class="featured-card">
-    <img src="img/spot.png" alt="The Spot Restaurant OS dashboard" class="featured-img" />
-    <div class="featured-body">
-      <span class="featured-pill">★ Featured Project</span>
-      <h3 class="featured-title">The Spot — Restaurant OS</h3>
-      <p class="featured-desc">
-        A full restaurant management system with a public ordering menu, live kitchen dashboard, and admin panel. Built entirely solo with vanilla PHP, SQLite, JavaScript, and Tailwind CSS.
-      </p>
-      <div class="featured-why">
-        <strong>Why I built it:</strong> Most restaurant POS tools are either too expensive for small local restaurants or don't fit the way Nigerian food businesses actually operate — split billing, table-based ordering, cash-first workflows. I built this system from scratch to solve that gap. It handles live orders, kitchen queues, inventory tracking, staff roles, and billing entirely from the browser — no third-party dependencies.
+    <h1 class="font-syne hero-stagger" style="font-size:clamp(42px,7vw,76px);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:22px;">
+      Building <span style="color:var(--green-text);">Digital</span> &amp;<br>Physical Spaces
+    </h1>
+
+    <p class="hero-stagger" style="font-size:18px;color:var(--muted);max-width:500px;line-height:1.65;margin-bottom:14px;font-weight:300;">
+      Full-stack web developer and architect based in Lagos. I build complete web systems — from the database up to the interface.
+    </p>
+
+    <p class="hero-stagger" style="font-size:13px;color:var(--muted);letter-spacing:0.04em;margin-bottom:36px;opacity:0.7;">
+      PHP &nbsp;·&nbsp; MySQL &nbsp;·&nbsp; JavaScript &nbsp;·&nbsp; Lagos, Nigeria
+    </p>
+
+    <div class="hero-stagger" style="display:flex;gap:12px;flex-wrap:wrap;">
+      <button class="btn-green" id="hero-hire">Hire Me</button>
+      <a href="#webdev" class="btn-outline">View My Work</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider" style="max-width:1100px;margin:0 auto;" />
+
+<!-- ── WEB DEV ── -->
+<section id="webdev" style="max-width:900px;margin:0 auto;padding:96px 24px;">
+  <p class="section-eyebrow fade-up">Web Development</p>
+  <h2 class="font-syne fade-up" style="font-size:clamp(28px,4vw,40px);font-weight:700;letter-spacing:-0.02em;margin-bottom:8px;">Projects</h2>
+  <p class="fade-up" style="color:var(--muted);font-size:15px;margin-bottom:52px;font-weight:300;">Full-stack systems built with PHP, MySQL, JavaScript, and CSS.</p>
+
+  <!-- FEATURED: THE SPOT -->
+  <div class="featured-card fade-up" style="margin-bottom:20px;">
+    <div style="display:flex;flex-wrap:wrap;">
+      <div style="flex:1;min-width:280px;">
+        <img src="img/spot.png" alt="The Spot Restaurant OS dashboard" style="width:100%;height:100%;min-height:220px;object-fit:cover;display:block;" />
       </div>
-      <div class="tags">
-        <span class="tag">PHP</span>
-        <span class="tag">SQLite</span>
-        <span class="tag">JavaScript</span>
-        <span class="tag">Tailwind CSS</span>
-        <span class="tag">Custom MVC</span>
-        <span class="tag">Role-based auth</span>
-      </div>
-      <div class="project-links">
-        <a href="https://restaurant-ordering-system-lstg.onrender.com" target="_blank" class="link-btn link-btn-solid">Live Demo ↗</a>
-        <a href="https://github.com/minty-9/restaurant-ordering-system" target="_blank" class="link-btn link-btn-outline">GitHub</a>
-        <!-- REPLACE the href below with your actual Loom link when ready -->
-        <a href="YOUR_LOOM_LINK_HERE" target="_blank" class="link-btn link-btn-loom">▶ Watch Walkthrough</a>
+      <div style="flex:1;min-width:280px;padding:32px;display:flex;flex-direction:column;justify-content:center;">
+        <span class="featured-badge" style="margin-bottom:16px;width:fit-content;">★ Featured Project</span>
+        <h3 class="font-syne" style="font-size:24px;font-weight:700;letter-spacing:-0.02em;margin-bottom:12px;">The Spot — Restaurant OS</h3>
+        <p style="color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:14px;font-weight:300;">
+          A full restaurant management system with a public ordering menu, live kitchen dashboard, and admin panel. Built entirely solo with vanilla PHP, SQLite, JavaScript, and Tailwind CSS.
+        </p>
+        <div class="why-block" style="margin-bottom:20px;">
+          <p style="font-size:13px;color:var(--muted);line-height:1.7;">
+            <span style="color:var(--green-text);font-weight:500;">Why I built it:</span> Most restaurant POS tools are either too expensive for small local restaurants or don't fit the way Nigerian food businesses actually operate — split billing, table-based ordering, cash-first workflows. I built this from scratch to solve that gap: live orders, kitchen queues, inventory, staff roles, and billing — entirely in the browser, no third-party dependencies.
+          </p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px;">
+          <span class="tech-tag">PHP</span>
+          <span class="tech-tag">SQLite</span>
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">Tailwind CSS</span>
+          <span class="tech-tag">Custom MVC</span>
+          <span class="tech-tag">Role-based auth</span>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="https://restaurant-ordering-system-lstg.onrender.com" target="_blank" class="link-solid">Live Demo ↗</a>
+          <a href="https://github.com/minty-9/restaurant-ordering-system" target="_blank" class="link-ghost"><i class="fa-brands fa-github"></i> GitHub</a>
+          <a href="YOUR_LOOM_LINK_HERE" target="_blank" class="link-loom"><i class="fa-solid fa-circle-play"></i> Walkthrough</a>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- OTHER WORK -->
-  <p style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;margin-top:40px;">Other work</p>
-  <div class="other-grid">
+  <p style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin:44px 0 14px;">Other work</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;">
+
     <a href="https://minty-9.github.io/jovies-clothiers/" target="_blank" class="other-card">
-      <div class="other-title">Jovies Clothiers</div>
-      <div class="other-desc">Bespoke fashion website for a clothing brand.</div>
-      <div class="other-tags"><span class="other-tag">HTML</span><span class="other-tag">CSS</span></div>
+      <img src="img/jov.jpg" alt="Jovies Clothiers" style="width:100%;height:140px;object-fit:cover;display:block;" />
+      <div style="padding:16px;">
+        <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;">Jovies Clothiers</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.5;">Bespoke fashion website for a clothing brand.</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tech-tag" style="font-size:11px;padding:3px 10px;">HTML</span>
+          <span class="tech-tag" style="font-size:11px;padding:3px 10px;">CSS</span>
+        </div>
+      </div>
     </a>
+
     <a href="https://minty-9.github.io/Sapril-cleaning/" target="_blank" class="other-card">
-      <div class="other-title">Sapril Cleaning</div>
-      <div class="other-desc">Landing page for a professional cleaning business.</div>
-      <div class="other-tags"><span class="other-tag">HTML</span><span class="other-tag">CSS</span></div>
+      <img src="img/sapril.jpg" alt="Sapril Cleaning" style="width:100%;height:140px;object-fit:cover;display:block;" />
+      <div style="padding:16px;">
+        <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;">Sapril Cleaning</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.5;">Landing page for a professional cleaning business.</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tech-tag" style="font-size:11px;padding:3px 10px;">HTML</span>
+          <span class="tech-tag" style="font-size:11px;padding:3px 10px;">CSS</span>
+        </div>
+      </div>
     </a>
+
     <a href="https://minty-9.github.io/task-manager/index.html" target="_blank" class="other-card">
-      <div class="other-title">Task Manager</div>
-      <div class="other-desc">App to organise and track daily tasks with priority and due dates.</div>
-      <div class="other-tags"><span class="other-tag">JavaScript</span></div>
-    </a>
-    <a href="https://minty-9.github.io/expense-tracker/" target="_blank" class="other-card">
-      <div class="other-title">Expense Tracker</div>
-      <div class="other-desc">Track income and expenses with visual summaries.</div>
-      <div class="other-tags"><span class="other-tag">JavaScript</span></div>
-    </a>
-  </div>
-  <p class="other-note">More projects coming soon — currently building a multi-tenant booking system.</p>
-</section>
-
-<hr class="divider" />
-
-<!-- ARCHITECTURE -->
-<section id="architecture">
-  <p class="section-label">Architecture</p>
-  <h2 class="section-title">Design Work</h2>
-  <p class="section-sub">Structural design meets aesthetic precision — residential and commercial projects.</p>
-  <div class="arch-grid">
-    <a href="architecture.html" class="arch-card">
-      <div class="arch-img"></div>
-      <div class="arch-body">
-        <div class="arch-name">Residential Villa</div>
-        <div class="arch-sub">Modern minimalist design emphasising natural light and flow.</div>
+      <img src="img/task.jpg" alt="Task Manager" style="width:100%;height:140px;object-fit:cover;display:block;" />
+      <div style="padding:16px;">
+        <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;">Task Manager App</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.5;">Organise and track daily tasks with priority and due dates.</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tech-tag" style="font-size:11px;padding:3px 10px;">JavaScript</span>
+        </div>
       </div>
     </a>
-    <a href="architecture.html" class="arch-card">
-      <div class="arch-img"></div>
-      <div class="arch-body">
-        <div class="arch-name">Commercial Hub</div>
-        <div class="arch-sub">Functional space blending aesthetic appeal and structural efficiency.</div>
+
+    <a href="https://minty-9.github.io/expense-tracker/index.html" target="_blank" class="other-card">
+      <img src="img/expense.jpg" alt="Expense Tracker" style="width:100%;height:140px;object-fit:cover;display:block;" />
+      <div style="padding:16px;">
+        <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;">Expense Tracker</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.5;">Track income and expenses with visual summaries.</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tech-tag" style="font-size:11px;padding:3px 10px;">JavaScript</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+  <p style="font-size:12px;color:var(--muted);font-style:italic;margin-top:10px;">More coming soon — currently building a multi-tenant booking system.</p>
+</section>
+
+<hr class="section-divider" style="max-width:1100px;margin:0 auto;" />
+
+<!-- ── ARCHITECTURE ── -->
+<section id="architecture" style="max-width:900px;margin:0 auto;padding:96px 24px;">
+  <p class="section-eyebrow fade-up">Architecture</p>
+  <h2 class="font-syne fade-up" style="font-size:clamp(28px,4vw,40px);font-weight:700;letter-spacing:-0.02em;margin-bottom:8px;">Design Work</h2>
+  <p class="fade-up" style="color:var(--muted);font-size:15px;margin-bottom:52px;font-weight:300;">Structural design meets aesthetic precision — residential and commercial projects.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:28px;" class="fade-up">
+    <a href="architecture.html" class="card" style="text-decoration:none;display:block;overflow:hidden;">
+      <img src="img/resi.jpg" alt="Residential Villa" style="width:100%;height:180px;object-fit:cover;display:block;" />
+      <div style="padding:20px;">
+        <div class="font-syne" style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:5px;">Residential Villa</div>
+        <div style="font-size:13px;color:var(--muted);">Modern minimalist design emphasising natural light and flow.</div>
+      </div>
+    </a>
+    <a href="architecture.html" class="card" style="text-decoration:none;display:block;overflow:hidden;">
+      <img src="img/commer.jpg" alt="Commercial Hub" style="width:100%;height:180px;object-fit:cover;display:block;" />
+      <div style="padding:20px;">
+        <div class="font-syne" style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:5px;">Commercial Hub</div>
+        <div style="font-size:13px;color:var(--muted);">Functional space blending aesthetic appeal and structural efficiency.</div>
       </div>
     </a>
   </div>
-  <a href="architecture.html" class="arch-link">View All Architecture Works →</a>
+
+  <a href="architecture.html" class="btn-outline fade-up" style="width:fit-content;">View All Architecture Works →</a>
 </section>
 
-<hr class="divider" />
+<hr class="section-divider" style="max-width:1100px;margin:0 auto;" />
 
-<!-- ABOUT -->
-<section id="about">
-  <p class="section-label">About</p>
-  <h2 class="section-title">About Minty</h2>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>
-        I'm <strong>Simeon (Minty)</strong> — a full-stack web developer and architect based in Lagos, Nigeria. I build web systems that solve real operational problems, from the database design up to the user interface.
+<!-- ── ABOUT ── -->
+<section id="about" style="max-width:900px;margin:0 auto;padding:96px 24px;">
+  <p class="section-eyebrow fade-up">About</p>
+  <h2 class="font-syne fade-up" style="font-size:clamp(28px,4vw,40px);font-weight:700;letter-spacing:-0.02em;margin-bottom:40px;">About Minty</h2>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:52px;">
+    <div class="fade-up">
+      <p style="color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:16px;font-weight:300;">
+        I'm <strong style="color:var(--text);font-weight:500;">Simeon (Minty)</strong> — a full-stack web developer and architect based in Lagos, Nigeria. I build web systems that solve real operational problems, from the database design up to the user interface.
       </p>
-      <p>
-        My most complete project is <strong>The Spot</strong> — a full restaurant operating system I designed and built entirely solo. It handles live table orders, kitchen dashboards, inventory, staff roles, and billing. No framework, no team — just a problem I decided to solve.
+      <p style="color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:16px;font-weight:300;">
+        My most complete project is <strong style="color:var(--text);font-weight:500;">The Spot</strong> — a full restaurant operating system built entirely solo. It handles live table orders, kitchen dashboards, inventory, staff roles, and billing, with no framework and no team.
       </p>
-      <p>
-        My background in architecture gives me an edge most developers don't have — I think in systems, structure, and user flow before I write a single line of code. I'm currently open to <strong>remote developer roles</strong> and freelance projects where I can build something real.
+      <p style="color:var(--muted);font-size:15px;line-height:1.8;font-weight:300;">
+        My background in architecture gives me an edge most developers don't have — I think in systems, structure, and user flow before I write a single line of code. Currently <strong style="color:var(--green-text);font-weight:500;">open to remote developer roles</strong>.
       </p>
     </div>
-    <div class="skills-block">
-      <p class="skills-label">Tech stack</p>
-      <div class="skills-list">
+
+    <div class="fade-up">
+      <p style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Tech stack</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;">
         <span class="skill-chip">PHP</span>
         <span class="skill-chip">MySQL</span>
         <span class="skill-chip">SQLite</span>
@@ -459,71 +474,91 @@
         <span class="skill-chip">Tailwind CSS</span>
         <span class="skill-chip">REST APIs</span>
         <span class="skill-chip">Custom MVC</span>
+        <span class="skill-chip">Git & GitHub</span>
       </div>
-      <p class="skills-label">Find me</p>
-      <div class="socials">
-        <a href="https://github.com/minty-9" target="_blank" class="social-link">GitHub</a>
-        <a href="https://www.linkedin.com/in/david-simeon-8b136a156" target="_blank" class="social-link">LinkedIn</a>
-        <a href="https://wa.link/c4ub0x" target="_blank" class="social-link">WhatsApp</a>
-        <a href="https://x.com/onlyoneminty?s=21" target="_blank" class="social-link">X / Twitter</a>
-        <a href="https://www.instagram.com/_mintyyy.__" target="_blank" class="social-link">Instagram</a>
+      <p style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Find me</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <a href="https://github.com/minty-9" target="_blank" class="social-link"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="https://www.linkedin.com/in/david-simeon-8b136a156" target="_blank" class="social-link"><i class="fa-brands fa-linkedin" style="color:#60a5fa;"></i> LinkedIn</a>
+        <a href="https://wa.link/c4ub0x" target="_blank" class="social-link"><i class="fa-brands fa-whatsapp" style="color:#4ade80;"></i> WhatsApp</a>
+        <a href="https://x.com/onlyoneminty?s=21" target="_blank" class="social-link"><i class="fa-brands fa-x-twitter"></i> X</a>
+        <a href="https://www.instagram.com/_mintyyy.__" target="_blank" class="social-link"><i class="fa-brands fa-instagram" style="color:#f472b6;"></i> Instagram</a>
       </div>
     </div>
   </div>
 </section>
 
-<footer>
-  &copy; Minty. All rights reserved.
+<!-- ── FOOTER ── -->
+<footer style="border-top:1px solid var(--border);padding:28px 24px;text-align:center;">
+  <p style="font-size:13px;color:var(--muted);">© <span id="year"></span> Minty. All rights reserved.</p>
 </footer>
 
-<!-- HIRE ME MODAL -->
+<!-- ── HIRE ME MODAL ── -->
 <div class="modal-overlay" id="modal">
-  <div class="modal">
-    <div class="modal-head">
-      <h3>Get in Touch</h3>
-      <button class="modal-close" id="modal-close">&times;</button>
+  <div class="modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+      <h3 class="font-syne" style="font-size:22px;font-weight:700;">Get in Touch</h3>
+      <button id="close-modal" style="background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;line-height:1;padding:0;">&times;</button>
     </div>
-    <p>I'll get back to you within 24 hours.</p>
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" id="name" placeholder="Your name" />
+    <p style="font-size:14px;color:var(--muted);margin-bottom:24px;">I'll get back to you within 24 hours.</p>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <input type="text"  id="m-name"    class="modal-input" placeholder="Your name" />
+      <input type="email" id="m-email"   class="modal-input" placeholder="your@email.com" />
+      <textarea           id="m-message" class="modal-input" placeholder="Tell me about your project..."></textarea>
+      <button class="btn-green" style="width:100%;justify-content:center;" onclick="sendMail()">Send Message</button>
     </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="your@email.com" />
-    </div>
-    <div class="form-group">
-      <label for="message">Message</label>
-      <textarea id="message" placeholder="Tell me about your project..."></textarea>
-    </div>
-    <button class="btn-primary" style="width:100%;text-align:center;" onclick="sendMail()">Send Message</button>
   </div>
 </div>
 
 <script>
-  // Nav hamburger
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Modal open/close
+  // Hamburger
+  document.getElementById('hamburger').addEventListener('click', () => {
+    const m = document.getElementById('mobile-menu');
+    m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+    if (m.style.display === 'flex') m.style.flexDirection = 'column';
+  });
+  document.querySelectorAll('#mobile-menu a').forEach(a => {
+    a.addEventListener('click', () => { document.getElementById('mobile-menu').style.display = 'none'; });
+  });
+
+  // Modal
   const modal = document.getElementById('modal');
   const openModal = () => modal.classList.add('open');
   const closeModal = () => modal.classList.remove('open');
-  document.getElementById('nav-hire-btn').addEventListener('click', e => { e.preventDefault(); openModal(); });
-  document.getElementById('hero-hire-btn').addEventListener('click', openModal);
-  document.getElementById('mobile-hire-btn').addEventListener('click', e => { e.preventDefault(); openModal(); });
-  document.getElementById('modal-close').addEventListener('click', closeModal);
+  ['nav-hire','hero-hire','mobile-hire'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', openModal);
+  });
+  document.getElementById('close-modal').addEventListener('click', closeModal);
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 
   // Send mail
   function sendMail() {
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const message = document.getElementById('message').value.trim();
+    const name    = document.getElementById('m-name').value.trim();
+    const email   = document.getElementById('m-email').value.trim();
+    const message = document.getElementById('m-message').value.trim();
     if (!name || !email || !message) { alert('Please fill in all fields.'); return; }
-    window.location.href = `mailto:your@email.com?subject=Portfolio enquiry from ${encodeURIComponent(name)}&body=${encodeURIComponent(message + '\n\nFrom: ' + email)}`;
+    window.location.href = `mailto:simeondavid99@gmail.com?subject=Project Inquiry from ${encodeURIComponent(name)}&body=${encodeURIComponent(message + '\n\nReply to: ' + email)}`;
+    closeModal();
   }
+
+  // Hero stagger
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.hero-stagger').forEach((el, i) => {
+      setTimeout(() => el.classList.add('show'), i * 110);
+    });
+  });
+
+  // Scroll fade-up
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
