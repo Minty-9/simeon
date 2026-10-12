@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tech — Simeon David</title>
+<meta name="description" content="Full-stack projects by Simeon David: Les Passe and The Spot.">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="img/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0d1117">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <div class="nav-inner">
+    <a class="nav-logo syne" href="index.html">Simeon David</a>
+    <nav class="nav-links">
+      <a href="tech.html" aria-current="page">Tech</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="index.html#about">About</a>
+      <a href="contact.html" class="btn-green">Hire Me</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="tech.html" aria-current="page">Tech</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="index.html#about">About</a>
+    <a href="contact.html" class="btn-green">Hire Me</a>
+  </div>
+</header>
+
+<div class="container page-head">
+  <p class="eyebrow">Tech</p>
+  <h1 class="section-title syne">Projects</h1>
+  <p class="section-sub">Live systems built for real clients and real operations. Open a project to read the story.</p>
+</div>
+<section style="padding-top:0">
+  <div class="container">
+    <div class="featured"><div class="featured-inner">
+      <img src="img/vacc.png" alt="VACC Learn learning platform" class="featured-img" onerror="this.style.display='none'">
+      <div class="featured-body">
+        <span class="f-badge">Client project</span>
+        <h3 class="f-title">VACC Learn</h3>
+        <p class="f-desc">A learning platform for Vera Alex Coaching Company: video lessons, assignments, community, progress tracking and certificates, installable on any phone.</p>
+        <div class="tags"><span class="tag">Web app</span><span class="tag">PWA</span><span class="tag">Admin panel</span><span class="tag">Certificates</span></div>
+        <div class="plinks"><button class="pl-solid" data-case="vacc">Read the story</button><a href="https://app.veraalexcoaching.com" target="_blank" rel="noopener" class="pl-ghost">Live app &#8599;</a></div>
+      </div>
+    </div></div>
+    <div class="featured"><div class="featured-inner">
+      <img src="img/lespasse.png" alt="Les Passe gate pass system" class="featured-img" onerror="this.style.display='none'">
+      <div class="featured-body">
+        <span class="f-badge">Live product</span>
+        <h3 class="f-title">Les Passe</h3>
+        <p class="f-desc">A gate pass system that lets estate residents send visitors an access code in seconds. Guards verify at the gate and admins audit every entry.</p>
+        <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">JavaScript</span><span class="tag">QR codes</span></div>
+        <div class="plinks"><button class="pl-solid" data-case="lespasse">Read the story</button><a href="https://www.lespasse.ng" target="_blank" rel="noopener" class="pl-ghost">Live site &#8599;</a></div>
+      </div>
+    </div></div>
+    <div class="featured"><div class="featured-inner">
+      <img src="img/spot.png" alt="The Spot Restaurant OS" class="featured-img">
+      <div class="featured-body">
+        <span class="f-badge">Featured</span>
+        <h3 class="f-title">The Spot: Restaurant OS</h3>
+        <p class="f-desc">A restaurant management system with a public ordering menu, live kitchen dashboard and admin panel. Built solo with vanilla PHP, SQLite, JavaScript and Tailwind CSS.</p>
+        <div class="tags"><span class="tag">PHP</span><span class="tag">SQLite</span><span class="tag">JavaScript</span><span class="tag">Tailwind CSS</span></div>
+        <div class="plinks"><button class="pl-solid" data-case="spot">Read the story</button><a href="https://restaurant-ordering-system-lstg.onrender.com" target="_blank" rel="noopener" class="pl-ghost">Live demo &#8599;</a></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+<div class="cs-overlay" id="cs-overlay" role="dialog" aria-modal="true" aria-labelledby="cs-title">
+  <div class="cs-box"><button class="cs-close" aria-label="Close">&times;</button><div id="cs-content"></div></div>
+</div>
+<footer><p>&copy; <span id="yr"></span> Simeon David. All rights reserved.</p></footer>
+<script src="app.js"></script>
+</body>
+</html>

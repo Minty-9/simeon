@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Simeon David</title>
+<meta name="description" content="Hire Simeon David for web development and architecture work.">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="img/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0d1117">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <div class="nav-inner">
+    <a class="nav-logo syne" href="index.html">Simeon David</a>
+    <nav class="nav-links">
+      <a href="tech.html">Tech</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="index.html#about">About</a>
+      <a href="contact.html" class="btn-green">Hire Me</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="tech.html">Tech</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="index.html#about">About</a>
+    <a href="contact.html" class="btn-green">Hire Me</a>
+  </div>
+</header>
+
+<div class="container page-head">
+  <p class="eyebrow">Contact</p>
+  <h1 class="section-title syne">Let's work together</h1>
+  <p class="section-sub" style="margin-bottom:0">Tell me about your project. I reply within 24 hours.</p>
+</div>
+<div class="container">
+  <div class="contact-grid">
+    <form id="contact-form">
+      <div class="field"><label for="name">Name</label><input class="input" id="name" name="name" required autocomplete="name"></div>
+      <div class="field"><label for="email">Email</label><input class="input" id="email" name="email" type="email" required autocomplete="email"></div>
+      <div class="field"><label for="message">Message</label><textarea class="input" id="message" name="message" required placeholder="What are you building?"></textarea></div>
+      <button class="btn-green" type="submit" style="width:100%;justify-content:center">Send message</button>
+    </form>
+    <div class="direct">
+      <p>Prefer to write directly?</p>
+      <a class="mail" href="mailto:simeondavid99@gmail.com">simeondavid99@gmail.com</a>
+      <p>Or find me here:</p>
+      <div class="socials">
+        <a href="https://github.com/minty-9" target="_blank" rel="noopener" class="social"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="https://www.linkedin.com/in/david-simeon-8b136a156" target="_blank" rel="noopener" class="social"><i class="fa-brands fa-linkedin" style="color:#60a5fa"></i> LinkedIn</a>
+        <a href="https://wa.link/c4ub0x" target="_blank" rel="noopener" class="social"><i class="fa-brands fa-whatsapp" style="color:#4ade80"></i> WhatsApp</a>
+        <a href="https://x.com/onlyoneminty?s=21" target="_blank" rel="noopener" class="social"><i class="fa-brands fa-x-twitter"></i> X</a>
+        <a href="https://www.instagram.com/_mintyyy.__" target="_blank" rel="noopener" class="social"><i class="fa-brands fa-instagram" style="color:#f472b6"></i> Instagram</a>
+      </div>
+    </div>
+  </div>
+</div>
+<footer><p>&copy; <span id="yr"></span> Simeon David. All rights reserved.</p></footer>
+<script src="app.js"></script>
+</body>
+</html>
