@@ -88,3 +88,23 @@ if (form) form.addEventListener('submit', e => {
   location.href = 'mailto:simeondavid99@gmail.com?subject=' + encodeURIComponent('Project inquiry from ' + n) +
     '&body=' + encodeURIComponent(m + '\n\nReply to: ' + em);
 });
+
+/* float-in on scroll */
+(() => {
+  const root = document.documentElement;
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) { root.classList.remove('js'); return; }
+  const els = document.querySelectorAll('.eyebrow, .section-title, .section-sub, .door, .featured, .about-grid > div, .empty, .contact-grid > *');
+  const seen = new Map();
+  els.forEach(el => {
+    const n = seen.get(el.parentNode) || 0; seen.set(el.parentNode, n + 1);
+    el.style.setProperty('--d', Math.min(n, 4) * 0.09 + 's');
+    el.classList.add('reveal');
+  });
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target; io.unobserve(el); el.classList.add('in');
+    // hand the element back to its normal hover styles once it has landed
+    setTimeout(() => el.classList.remove('reveal', 'in'), 1200);
+  }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  els.forEach(el => io.observe(el));
+})();
