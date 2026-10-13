@@ -119,3 +119,6 @@ footer p{font-size:13px;color:var(--muted)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.hs{opacity:1;transform:none}}
 @media(max-width:768px){.nav-links{display:none}.hamburger{display:block}section{padding:68px 0}.featured-body{padding:22px}.f-title{font-size:19px}.hero{padding:100px 24px 60px}.cs-body{padding:24px 20px 26px}.page-head{padding-top:110px}}
 @media(max-width:480px){.hero h1{font-size:36px}}
+/* float-in on scroll (only active when JS is on) */
+.js .reveal{opacity:0;transform:translateY(30px);transition:opacity .75s ease var(--d,0s),transform .75s cubic-bezier(.2,.8,.2,1) var(--d,0s),border-color .22s}
+.js .reveal.in{opacity:1;transform:none}
